@@ -2,12 +2,9 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between items-center px-10 py-6 bg-[#f5f5f3]">
-      
-      
-
+    <nav className="flex justify-between items-center px-6 py-4 bg-transparent">
       {/* Center Menu */}
-      <ul className="hidden md:flex gap-10 text-gray-700">
+      <ul className="hidden md:flex gap-10 text-white">
         <li className="hover:text-black cursor-pointer">Virtual Try-On Studio</li>
         <li className="hover:text-black cursor-pointer">Pricing</li>
         <li className="hover:text-black cursor-pointer">Tutorials</li>

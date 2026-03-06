@@ -68,9 +68,9 @@ const features = () => {
       <section className="px-6 pb-20">
         <div className="max-w-7xl mx-auto overflow-hidden rounded-3xl shadow-2xl">
           <img 
-            src="../.jpg"
+            src="hero.jpg"
             alt="Virtual Try On Interface" 
-            className="w-full h-[600px] object-cover"
+            className="w-full h-150 object-cover"
           />
         </div>
       </section>

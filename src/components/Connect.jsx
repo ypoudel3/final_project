@@ -13,7 +13,7 @@ const Connect = () => {
         ].map((item, index) => (
           <div key={index} className="space-y-4">
             <span className="text-6xl font-serif text-gray-100 block">{item.num}</span>
-            <p className="text-gray-600 text-sm leading-relaxed max-w-[200px]">
+            <p className="text-gray-600 text-sm leading-relaxed max-w-50">
               {item.text}
             </p>
           </div>
@@ -22,11 +22,11 @@ const Connect = () => {
 
       {/* Main Visual Centerpiece */}
       <div className="max-w-7xl mx-auto mb-16 px-4">
-        <div className="rounded-[3rem] overflow-hidden aspect-[21/9] shadow-sm">
+        <div className="rounded-[3rem] overflow-hidden aspect-21/9 shadow-sm">
           <img
             src="/aerial-landscape.jpg"
             alt="Nature Aerial Perspective"
-            className="w-full h-full object-cover transition-transform duration-[2000ms] hover:scale-110"
+            className="w-full h-full object-cover transition-transform duration-2000ms hover:scale-110"
           />
         </div>
       </div>

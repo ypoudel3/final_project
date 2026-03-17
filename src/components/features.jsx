@@ -1,6 +1,6 @@
 import React from 'react';
 
-const features = () => {
+const Features = () => {
   const benefits = [
     {
       title: "Seamless Fitting",
@@ -28,7 +28,7 @@ const features = () => {
     <div className="bg-white text-slate-900 font-sans antialiased">
       {/* Trusted By Section */}
       <section className="py-12 border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl px-12">
           <p className="text-xs uppercase tracking-widest text-gray-400 mb-8">Trusted by:</p>
           <div className="flex flex-wrap justify-between items-center opacity-50 grayscale gap-8">
             {/* Replace with your logo components/images */}
@@ -78,4 +78,4 @@ const features = () => {
   );
 };
 
-export default features;
+export default Features;

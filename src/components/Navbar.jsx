@@ -2,15 +2,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between px-24 bg-transparent text-white">
-
-      {/* Left Menu */}
-      <ul className="flex gap-10 items-center">
-        <li className="hover:text-black cursor-pointer">Virtual Try-On Studio</li>
-        <li className="hover:text-black cursor-pointer">Pricing</li>
-      </ul>
-
-      {/* Center Logo */}
+    <nav className="flex items-center justify-between px-12 bg-transparent text-white">
       <div className="flex justify-center items-center">
           <svg
   xmlns="http://www.w3.org/2000/svg"
@@ -114,6 +106,12 @@ const Navbar = () => {
 </svg>
       </div>
 
+<div c>
+   <ul className="flex gap-10 items-center">
+        <li className="hover:text-black cursor-pointer">Virtual Try-On Studio</li>
+        <li className="hover:text-black cursor-pointer">Pricing</li>
+      </ul>
+
       {/* Right Side */}
       <div className="flex items-center gap-10">
         <ul className="flex gap-10">
@@ -125,6 +123,7 @@ const Navbar = () => {
           Log in
         </button>
       </div>
+  </div>     
 
     </nav>
   );

@@ -410,6 +410,54 @@ const Connect = () => {
   );
 };
 
+const Footer = () => {
+  return (
+    <footer className="bg-[#F5F5F3] text-slate-800 py-12">
+      
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-10">
+
+        {/* Logo / Brand */}
+        <div className="text-center md:text-left flex-1">
+          <h2 className="text-2xl font-serif font-bold">Virtual Try-On</h2>
+          <p className="text-gray-500 text-sm mt-2">
+            Experience fashion virtually
+          </p>
+        </div>
+
+        
+        {/* Contact Info */}
+        <div className="flex-1 space-y-3 text-sm">
+          <h3 className="font-semibold text-slate-900">Contact</h3>
+          <ul className="text-gray-600 space-y-1">
+            <li>Email: <a href="mailto:info@virtualtryon.com" className="hover:text-black transition">info@virtualtryon.com</a></li>
+            <li>Phone: <a href="tel:+1234567890" className="hover:text-black transition">+1 234 567 890</a></li>
+            <li>Address: <a href=" Kathmandu, Nepal" className="hover:text-black transition">Kathmandu,Nepal</a></li>
+          </ul>
+        </div>
+
+        {/* Social */}
+        <div className="flex-1 space-y-4 text-sm">
+          <h3 className="font-semibold text-slate-900">Stay Connected</h3>
+          <div className="flex gap-4 text-gray-600">
+            <a href="#" className="hover:text-black transition">Instagram</a>
+            <a href="#" className="hover:text-black transition">Facebook</a>
+            <a href="#" className="hover:text-black transition">LinkedIn</a>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="mt-8 border-t border-gray-200 pt-4 text-center text-gray-400 text-sm">
+        &copy; {new Date().getFullYear()} Virtual Try-On. All rights reserved.
+      </div>
+
+    </footer>
+  );
+};
+
+
+
 const LandingPage = () => {
   return (
     <>
@@ -419,6 +467,7 @@ const LandingPage = () => {
       <Choose />
       <Testimonial />
       <Connect />
+      <Footer />
     </>
   );
 };

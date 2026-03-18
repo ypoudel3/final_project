@@ -8,7 +8,7 @@ const Testimonial = () => {
       <div className="flex-1 w-full">
         <div className="relative rounded-[3rem] overflow-hidden aspect-square shadow-2xl shadow-gray-200">
           <img 
-            src="/image.jpg"
+            src="/img3.jpg"
             alt="Customer Testimonial" 
             className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000"
           />
@@ -27,7 +27,7 @@ const Testimonial = () => {
           </p>
           
           <div className="pt-6 border-t border-gray-100">
-            <h4 className="text-xl font-bold text-slate-900">Kusum Bhandari</h4>
+            <h4 className="text-xl font-bold text-slate-900">Kusuma  Bhandari</h4>
             <p className="text-[#A3B18A] font-mono text-sm uppercase tracking-widest mt-1">
               Head of Style
             </p>

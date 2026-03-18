@@ -24,7 +24,7 @@ const Connect = () => {
       <div className="max-w-7xl mx-auto mb-16 px-4">
         <div className="rounded-[3rem] overflow-hidden aspect-21/9 shadow-sm">
           <img
-            src="/aerial-landscape.jpg"
+            src="/img2.jpg"
             alt="Nature Aerial Perspective"
             className="w-full h-full object-cover transition-transform duration-2000ms hover:scale-110"
           />

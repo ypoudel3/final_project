@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "./Navbar"; 
 
 const Hero = () => {
   return (
@@ -7,11 +6,8 @@ const Hero = () => {
       <div className="w-full h-dvh overflow-hidden">
         <img src="/img1.jpg" className="w-full h-full object-cover object-top" />
       </div>
-      <div className="absolute inset-0">
-        <Navbar />
-      </div>
       {/* Hero content */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 pt-28">
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 pt-32">
         <h1 className="text-5xl md:text-7xl font-serif font-medium leading-tight text-white max-w-4xl">
           Virtual Try On — Upload Your Photo and Try Clothes
         </h1>
@@ -183,7 +179,7 @@ const Process = () => {
 
       {/* Right Image Column */}
       <div className="flex-1 w-full">
-        <div className="relative rounded-[3rem] overflow-hidden bg-[#D9CDB7] aspect-[4/5]">
+        <div className="relative rounded-[3rem] overflow-hidden bg-[#D9CDB7] aspect-4/5">
           <img
             src="/tryon.jpg"
             alt="Virtual Fitting Process"
@@ -341,7 +337,7 @@ const Testimonial = () => {
           {/* Large Quote Mark */}
           <span className="text-8xl font-serif text-[#E3F2C1] leading-none select-none">“</span>
           
-          <p className="text-4xl md:text-5xl font-serif text-slate-900 leading-[1.2] mt-[-2rem]">
+          <p className="text-4xl md:text-5xl font-serif text-slate-900 leading-[1.2] mt-8">
             I was skeptical, but the virtual try-on has completely transformed how I shop. The visualization is so clear and effortless.
           </p>
          

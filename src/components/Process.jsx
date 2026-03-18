@@ -5,7 +5,7 @@ const Process = () => {
     {
       id: "01",
       title: "Upload Your Photo",
-      desc: "Simply take or upload a full-body photo to get started with the virtual mirror."
+      desc: "Simply upload your full-body photo to get started with the virtual mirror."
     },
     {
       id: "02",

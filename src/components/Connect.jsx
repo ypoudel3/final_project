@@ -12,7 +12,7 @@ const Connect = () => {
           { num: "03", text: "Connect with a stylist in real-time." }
         ].map((item, index) => (
           <div key={index} className="space-y-4">
-            <span className="text-6xl font-serif text-gray-100 block">{item.num}</span>
+            <span className="text-6xl font-serif text-gray-500 block">{item.num}</span>
             <p className="text-gray-600 text-sm leading-relaxed max-w-50">
               {item.text}
             </p>

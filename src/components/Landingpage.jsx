@@ -28,22 +28,18 @@ const Features = () => {
     {
       title: "Seamless Fitting",
       desc: "Our AI accurately maps clothing to your body shape for a realistic 360° preview.",
-      icon: "👕"
     },
     {
       title: "Global Style Access",
       desc: "Try on the latest collections from international designers without leaving home.",
-      icon: "🌍"
     },
     {
       title: "Size Accuracy",
       desc: "Reduce returns by visualizing exactly how different sizes drap across your frame.",
-      icon: "📏"
     },
     {
       title: "Instant Visualization",
       desc: "High-speed rendering provides real-time feedback as you switch styles.",
-      icon: "⚡"
     }
   ];
 
@@ -51,11 +47,11 @@ const Features = () => {
   <div className="bg-white text-slate-900 font-sans antialiased">
     {/* Trusted By Section */}
     <section className="py-12 border-b border-gray-100">
-      <div className="max-w-6xl px-12 mx-auto">
-        <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 text-center">
+      <div className="max-w-6xl mx-auto pl-4 ">
+        <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 ">
           Trusted by:
         </p>
-        <div className="flex flex-wrap justify-center items-center gap-8 opacity-50 grayscale">
+        <div className="flex flex-wrap gap-8 opacity-50 grayscale">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg"
             alt="Nike"
@@ -83,7 +79,7 @@ const Features = () => {
 
 
       {/* Hero Content Section */}
-      <section className="py-20 max-w-6xl mx-auto px-6">
+      <section className="py-8 max-w-6xl mx-auto px-6">
         <span className="text-green-600 font-semibold text-sm">Benefits</span>
         <h1 className="text-5xl md:text-6xl font-serif mt-6 mb-4">We’ve cracked the code.</h1>
         <p className="text-gray-500 text-lg max-w-xl">
@@ -105,7 +101,7 @@ const Features = () => {
       </section>
 
       {/* Hero Image / Video Section */}
-      <section className="px-6 pb-20">
+      <section className="px-8 py-12">
         <div className="max-w-7xl mx-auto overflow-hidden rounded-3xl shadow-2xl">
           <img 
             src="hero.jpg"
@@ -146,7 +142,7 @@ const Process = () => {
     <section className="bg-white py-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
       
       {/* Left Content Column */}
-      <div className="flex-1 space-y-8">
+      <div className="flex-1 space-y-8 px-20">
         <h2 className="text-5xl font-serif text-slate-900">See the Big Picture</h2>
 
         <p className="text-gray-500 text-lg max-w-md leading-relaxed">
@@ -178,8 +174,8 @@ const Process = () => {
       </div>
 
       {/* Right Image Column */}
-      <div className="flex-1 w-full">
-        <div className="relative rounded-[3rem] overflow-hidden bg-[#D9CDB7] aspect-4/5">
+      <div className="flex-1 w-full mx-auto pr-12">
+        <div className="relative rounded-[3rem] overflow-hidden bg-[#D9CDB7] aspect-4/6">
           <img
             src="/tryon.jpg"
             alt="Virtual Fitting Process"
@@ -228,7 +224,7 @@ const Choose = () => {
   ];
 
   return (
-    <section className="bg-white py-24 px-6 text-center">
+    <section className="bg-white py-20 px-20 text-center">
 
       {/* Header Section */}
       <div className="max-w-3xl mx-auto mb-16 space-y-4">
@@ -236,7 +232,7 @@ const Choose = () => {
           Efficiency
         </span>
 
-        <h2 className="text-6xl font-serif text-slate-900 leading-tight">
+        <h2 className="text-6xl font-serif text-slate-900 leading-tight pt-4">
           Why Choose Virtual Try-On?
         </h2>
 
@@ -251,7 +247,7 @@ const Choose = () => {
       </div>
 
       {/* Comparison Table */}
-      <div className="max-w-6xl mx-auto border border-gray-200 rounded-[2.5rem] overflow-hidden shadow-md">
+      <div className="max-w-6xl mx-auto border border-gray-200 rounded-[2.5rem] overflow-hidden shadow-md ">
         <div className="grid grid-cols-3 bg-white">
           
           {/* Column 1 */}
@@ -317,7 +313,7 @@ const Choose = () => {
 
 const Testimonial = () => {
   return (
-    <section className="bg-white py-24 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+    <section className="bg-white py-12 px-20 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
       
       {/* Left Column: Artistic/Glamorous Image */}
       <div className="flex-1 w-full">
@@ -357,10 +353,10 @@ const Testimonial = () => {
 
 const Connect = () => {
   return (
-    <section className="bg-white py-24 px-6 text-center">
+    <section className="bg-white py-20 text-center">
 
       {/* Top Numbered Steps */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 text-left">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 text-left place-items-center px-20 ">
         {[
           { num: "01", text: "Fill out our quick form with your needs." },
           { num: "02", text: "Receive a personalized style analysis." },
@@ -376,7 +372,7 @@ const Connect = () => {
       </div>
 
       {/* Main Visual Centerpiece */}
-      <div className="max-w-7xl mx-auto mb-16 px-4">
+      <div className="max-w-7xl mx-auto mb-16 px-8 py-8 ">
         <div className="rounded-[3rem] overflow-hidden aspect-21/9 shadow-sm">
           <img
             src="/img2.jpg"
@@ -406,51 +402,7 @@ const Connect = () => {
   );
 };
 
-const Footer = () => {
-  return (
-    <footer className="bg-[#F5F5F3] text-slate-800 py-12">
-      
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-10">
 
-        {/* Logo / Brand */}
-        <div className="text-center md:text-left flex-1">
-          <h2 className="text-2xl font-serif font-bold">Virtual Try-On</h2>
-          <p className="text-gray-500 text-sm mt-2">
-            Experience fashion virtually
-          </p>
-        </div>
-
-        
-        {/* Contact Info */}
-        <div className="flex-1 space-y-3 text-sm">
-          <h3 className="font-semibold text-slate-900">Contact</h3>
-          <ul className="text-gray-600 space-y-1">
-            <li>Email: <a href="mailto:info@virtualtryon.com" className="hover:text-black transition">info@virtualtryon.com</a></li>
-            <li>Phone: <a href="tel:+1234567890" className="hover:text-black transition">+1 234 567 890</a></li>
-            <li>Address: <a href=" Kathmandu, Nepal" className="hover:text-black transition">Kathmandu,Nepal</a></li>
-          </ul>
-        </div>
-
-        {/* Social */}
-        <div className="flex-1 space-y-4 text-sm">
-          <h3 className="font-semibold text-slate-900">Stay Connected</h3>
-          <div className="flex gap-4 text-gray-600">
-            <a href="#" className="hover:text-black transition">Instagram</a>
-            <a href="#" className="hover:text-black transition">Facebook</a>
-            <a href="#" className="hover:text-black transition">LinkedIn</a>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="mt-8 border-t border-gray-200 pt-4 text-center text-gray-400 text-sm">
-        &copy; {new Date().getFullYear()} Virtual Try-On. All rights reserved.
-      </div>
-
-    </footer>
-  );
-};
 
 
 
@@ -463,7 +415,6 @@ const LandingPage = () => {
       <Choose />
       <Testimonial />
       <Connect />
-      <Footer />
     </>
   );
 };

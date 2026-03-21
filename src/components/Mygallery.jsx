@@ -7,11 +7,11 @@ const GalleryItem = ({ src, alt, tag }) => (
     <img 
       src={src} 
       alt={alt} 
-      className="w-full grayscale-[20%] transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0"
+      className="w-full grayscale-20 transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0"
     />
 
     {/* Overlay on Hover */}
-    <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 flex items-end p-6">
+    <div className="absolute inset-0 bg-linear-to-t from-[#050507] via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 flex items-end p-6">
       <div className="translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
         <span className="px-3 py-1 rounded-full bg-purple-600/20 border border-purple-500/30 text-purple-400 text-[10px] font-bold uppercase tracking-widest">
           {tag}
@@ -31,7 +31,7 @@ export default function Mygallery() {
   ];
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-[#0a0a0f] to-[#1c0b2a] py-20 px-6">
+    <section className="min-h-screen bg-linear-to-b from-[#0a0a0f] to-[#1c0b2a] py-20 px-6">
       <div className="max-w-7xl mx-auto">
         
         {/* Gallery Header */}

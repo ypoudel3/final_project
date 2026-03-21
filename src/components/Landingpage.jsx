@@ -296,7 +296,7 @@ const Connect = () => {
     <section className="bg-white py-20 text-center">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 text-left place-items-center px-20 ">
         {[
-          { num: "01", text: "Fill out our quick form with your needs." },
+          { num: "01", text: "Fill out our quick form with all  your needs." },
           { num: "02", text: "Receive a personalized style analysis." },
           { num: "03", text: "Connect with a stylist in real-time." }
         ].map((item, index) => (

@@ -36,13 +36,13 @@ const Navbar = () => {
             >
               Virtual Try-On Studio
             </Link>
-            <Link to="#" className="text-white hover:text-gray-300 cursor-pointer">
+            <Link to="./Pricing" className="text-white hover:text-gray-300 cursor-pointer">
               Pricing
             </Link>
-            <Link to="#" className="text-white hover:text-gray-300 cursor-pointer">
+            <Link to="./Tutorials" className="text-white hover:text-gray-300 cursor-pointer">
               Tutorials
             </Link>
-            <Link to="#" className="text-white hover:text-gray-300 cursor-pointer">
+            <Link to="./Mygallery" className="text-white hover:text-gray-300 cursor-pointer">
               My Gallery
             </Link>
           </ul>

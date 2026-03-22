@@ -116,13 +116,13 @@ const Features = () => {
 
       {/* Hero Image / Video Section */}
       <section className="px-8 py-12">
-        <div className="max-w-7xl mx-auto overflow-hidden rounded-3xl shadow-2xl">
+        <motion.div variants={fadeUp} className="max-w-7xl mx-auto overflow-hidden rounded-3xl shadow-2xl">
           <img 
             src="hero.jpg"
             alt="Virtual Try On Interface" 
             className="w-full h-150 object-cover"
           />
-        </div>
+        </motion.div>
       </section>
     </motion.div>
   );
@@ -153,20 +153,25 @@ const Process = () => {
   ];
 
   return (
-    <section className="bg-white py-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+   
+    <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true,  amount: 0.2 }}className="bg-white py-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
       
       {/* Left Content Column */}
       <div className="flex-1 space-y-8 px-20">
-        <h2 className="text-5xl font-serif text-slate-900">See the Big Picture</h2>
+        <motion.h2  variants={fadeUp} className="text-5xl font-serif text-slate-900">See the Big Picture</motion.h2>
 
-        <p className="text-gray-500 text-lg max-w-md leading-relaxed">
+        <motion.p variants={fadeUp}  className="text-gray-500 text-lg max-w-md leading-relaxed">
           Experience fashion without the friction. Our AI turns your camera into a personal fitting room.
-        </p>
+        </motion.p>
 
         {/* Numbered List */}
         <div className="divide-y divide-gray-100 border-t border-gray-100 mt-10">
           {steps.map((step) => (
-            <div key={step.id} className="py-6 flex gap-6 items-start group">
+            <motion.div variants={fadeUp}  key={step.id} className="py-6 flex gap-6 items-start group">
               <span className="text-xs font-mono text-gray-400 mt-1">{step.id}</span>
 
               <div className="space-y-1">
@@ -177,18 +182,18 @@ const Process = () => {
                   </span>
                 </h4>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Button */}
-        <button className="mt-8 bg-[#E3F2C1] text-black px-10 py-4 rounded-full font-medium hover:brightness-95 transition-all">
+        <motion.button variants={fadeLeft}  className="mt-8 bg-[#E3F2C1] text-black px-10 py-4 rounded-full font-medium hover:brightness-95 transition-all">
           Discover More
-        </button>
+        </motion.button>
       </div>
 
       {/* Right Image Column */}
-      <div className="flex-1 w-full mx-auto pr-12">
+      <motion.div variants={fadeRight}  className="flex-1 w-full mx-auto pr-12">
         <div className="relative rounded-[3rem] overflow-hidden bg-[#D9CDB7] aspect-4/6">
           <img
             src="/tryon.jpg"
@@ -196,9 +201,9 @@ const Process = () => {
             className="w-full h-full object-cover"
           />
         </div>
-      </div>
-
-    </section>
+      </motion.div>
+    </motion.div>
+    
   );
 };
 

@@ -243,11 +243,16 @@ const Choose = () => {
   ];
 
   return (
-    <section className="bg-white py-20 px-20 text-center">
+    <motion.section 
+     variants={fadeLeft}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true,amount: 0.3 }}
+        className="bg-white py-20 px-20 text-center">
 
       {/* Header Section */}
-      <div className="max-w-3xl mx-auto mb-16 space-y-4">
-        <span className="text-[#A3B18A] font-mono text-sm uppercase tracking-widest">
+      <div className="max-w-3xl mx-auto mb-16 space-y-4"
+      >        <span className="text-[#A3B18A] font-mono text-sm uppercase tracking-widest">
           Efficiency
         </span>
 
@@ -266,7 +271,7 @@ const Choose = () => {
       </div>
 
       {/* Comparison Table */}
-      <div className="max-w-6xl mx-auto border border-gray-200 rounded-[2.5rem] overflow-hidden shadow-md ">
+      <motion.div variants={fadeUp} className="max-w-6xl mx-auto border border-gray-200 rounded-[2.5rem] overflow-hidden shadow-md ">
         <div className="grid grid-cols-3 bg-white">
           
           {/* Column 1 */}
@@ -324,15 +329,20 @@ const Choose = () => {
           </div>
 
         </div>
-      </div>
+      </motion.div>
 
-    </section>
+    </motion.section>
   );
 };
 
 const Testimonial = () => {
   return (
-    <section className="bg-white py-12 px-20 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+    <motion.section
+    variants={fadeLeft}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true,amount: 0.3 }}
+         className="bg-white py-12 px-20 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
       
       {/* Left Column: Artistic/Glamorous Image */}
       <div className="flex-1 w-full">
@@ -347,7 +357,9 @@ const Testimonial = () => {
 
       {/* Right Column: The Quote */}
       <div className="flex-1 space-y-8">
-        <div className="space-y-6">
+        <motion.div 
+        variants={fadeUp}
+        className="space-y-6">
           
           {/* Large Quote Mark */}
           <span className="text-8xl font-serif text-[#E3F2C1] leading-none select-none">“</span>
@@ -363,10 +375,10 @@ const Testimonial = () => {
             </p>
           </div>
 
-        </div>
+        </motion.div>
       </div>
 
-    </section>
+    </motion.section>
   );
 };
 
@@ -375,23 +387,33 @@ const Connect = () => {
     <section className="bg-white py-20 text-center">
 
       {/* Top Numbered Steps */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 text-left place-items-center px-20 ">
+      <motion.div
+       variants={fadeLeft}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true,amount: 0.3 }}
+        className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 text-left place-items-center px-20 ">
         {[
           { num: "01", text: "Fill out our quick form with your needs." },
           { num: "02", text: "Receive a personalized style analysis." },
           { num: "03", text: "Connect with a stylist in real-time." }
         ].map((item, index) => (
-          <div key={index} className="space-y-4">
+          <motion.div variants={fadeUp} key={index} className="space-y-4">
             <span className="text-6xl font-serif text-gray-500 block">{item.num}</span>
             <p className="text-gray-600 text-sm leading-relaxed max-w-50">
               {item.text}
             </p>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Main Visual Centerpiece */}
-      <div className="max-w-7xl mx-auto mb-16 px-8 py-8 ">
+      <motion.div 
+      variants={fadeUp}
+       initial="hidden"
+        whileInView="show"
+        viewport={{ once: true,amount: 0.3 }}
+        className="max-w-7xl mx-auto mb-16 px-8 py-8 ">
         <div className="rounded-[3rem] overflow-hidden aspect-21/9 shadow-sm">
           <img
             src="/img2.jpg"
@@ -399,10 +421,15 @@ const Connect = () => {
             className="w-full h-full object-cover transition-transform duration-2000ms hover:scale-110"
           />
         </div>
-      </div>
+      </motion.div>
 
       {/* Footer Content & Call to Action */}
-      <div className="space-y-6">
+      <motion.div 
+      variants={fadeUp}
+      initial="hidden"
+        whileInView="show"
+        viewport={{ once: true,amount: 0.3 }} 
+      className="space-y-6">
         <h2 className="text-5xl md:text-6xl font-serif text-slate-900">Connect with us</h2>
 
         <p className="text-gray-400 font-mono text-xs uppercase tracking-[0.2em]">
@@ -414,7 +441,7 @@ const Connect = () => {
             Learn More
           </button>
         </div>
-      </div>
+      </motion.div>
 
     </section>
      

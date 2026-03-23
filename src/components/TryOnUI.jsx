@@ -12,7 +12,7 @@ const UploadSection = ({ title }) => {
       <div className="border-2 border-dashed border-gray-500 rounded-xl h-72 flex flex-col items-center justify-center text-gray-300 cursor-pointer hover:bg-gray-800/30 transition">
         <ImagePlus size={40} />
         <p className="mt-3 text-md text-[#3B5249] text-center">Upload Image <br />Or</p>
-    <button className="bg-[#588157] text-white mt-2 px-6 py-2 rounded-2xl font-medium hover:bg-[#3a5a40] transition-all shadow-lg ">
+    <button className="bg-[#3B5249] text-white mt-2 px-6 py-2 rounded-2xl font-medium hover:bg-[#3a5a40] transition-all shadow-lg ">
           Upload File 
          </button>
       </div>
@@ -50,9 +50,12 @@ const TryOnUI = () => {
 
           {/* Step 2 */}
           <UploadSection title="Step 2: Select Your Outfit" />
+          
 
         </div>
-
+       <button className="bg-[#3B5249] text-white mt-8 mb-1 px-10 py-2 rounded-2xl font-medium hover:bg-[#3a5a40] transition-all shadow-lg block mx-auto">
+  Generate
+</button>
       </div>
     </div>
   );

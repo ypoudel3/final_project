@@ -40,8 +40,8 @@ const UploadSection = ({ title }) => {
 
 const TryOnUI = () => {
   return (
-    <div className="min-h-screen bg-[#fcf9f5] p-8">
-      <div className="max-w-6xl mx-auto border-4 border-[#3B5249] rounded-2xl p-6">
+    <div className="min-h-screen bg-[#ededea] p-8 mx-7 my-3 rounded-2xl">
+      <div className="max-w-6xl mx-auto border-2 border-[#3B5249] rounded-2xl p-6">
         
         <div className="flex flex-col md:flex-row gap-10">
           

@@ -244,7 +244,7 @@ const Choose = () => {
 
   return (
     <motion.section 
-     variants={fadeLeft}
+     variants={fadeUp}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true,amount: 0.3 }}

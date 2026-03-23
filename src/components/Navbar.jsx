@@ -12,7 +12,7 @@ const Navbar = () => {
       <nav
         className={`${
           isHome
-            ? "absolute top-0 left-0 w-full z-50 text-white hover:text-gray-300"
+          ? "absolute top-0 left-1 right-1 z-50 text-white hover:text-gray-300"
             : "relative bg-[#ededea] text-[#3B5249]"
         } flex items-center justify-between px-12 mx-7 my-3 rounded-2xl`}
       >

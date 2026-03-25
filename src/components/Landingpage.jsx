@@ -270,66 +270,71 @@ const Choose = () => {
         </button>
       </div>
 
-      {/* Comparison Table */}
-      <motion.div variants={fadeUp} className=" border border-gray-200 rounded-[2.5rem] overflow-hidden shadow-md ">
-        <div className="grid grid-cols-3 bg-white">
-          
-          {/* Column 1 */}
-          <div className="border-r border-gray-200 flex flex-col bg-[#F9FBF4]">
-            <div className="py-10 border-b border-gray-200">
-              <h3 className="text-2xl font-serif font-semibold text-slate-900 text-left px-14">
-                Our Platform
-              </h3>
-            </div>
+      <motion.div
+  variants={fadeUp}
+  className="border border-gray-200 rounded-[2.5rem] overflow-hidden shadow-md"
+>
+  <div className="grid grid-cols-3 bg-white">
+    
+    {/* Column 1 */}
+    <div className="border-r border-gray-200 flex flex-col bg-[#F9FBF4]">
+      <div className="py-10 border-b border-gray-200 text-center">
+        <h3 className="text-2xl font-serif font-semibold text-slate-900">
+          Our Platform
+        </h3>
+      </div>
 
-            {features.map((f, i) => (
-              <div key={i} className="py-8 px-8 border-b border-gray-200 flex items-center gap-3 text-left">
-                <span className="text-green-600 font-bold">✓</span>
-                <span className="text-sm font-medium text-slate-800">
-                  {f.area}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Column 2 */}
-          <div className="border-r border-gray-200 flex flex-col bg-[#F4F6FA]">
-            <div className="py-10 border-b border-gray-200">
-              <h3 className="text-2xl font-serif font-semibold text-slate-900 text-left px-14">
-                RetailSync
-              </h3>
-            </div>
-
-            {features.map((f, i) => (
-              <div key={i} className="py-8 px-8 border-b border-gray-200 flex items-center gap-3 text-left">
-                <span className="text-blue-600 font-bold">✓</span>
-                <span className="text-sm font-medium text-slate-800 ">
-                  {f.competitor1}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Column 3 */}
-          <div className="flex flex-col bg-[#FDF4F4]">
-            <div className="py-10 border-b border-gray-200">
-              <h3 className="text-2xl font-serif font-semibold text-slate-900 text-left px-14">
-                StyleView
-              </h3>
-            </div>
-
-            {features.map((f, i) => (
-              <div key={i} className="py-8 px-8 border-b border-gray-200 flex items-center gap-3 text-left">
-                <span className="text-red-600 font-bold">×</span>
-                <span className="text-sm font-medium text-slate-800">
-                  {f.competitor2}
-                </span>
-              </div>
-            ))}
-          </div>
-
+      {features.map((f, i) => (
+        <div
+          key={i}
+          className="py-8 px-8 border-b border-gray-200 flex items-center gap-3"
+        >
+          <span className="text-green-600 font-bold">✓</span>
+          <span className="text-sm font-medium text-slate-800">{f.area}</span>
         </div>
-      </motion.div>
+      ))}
+    </div>
+
+    {/* Column 2 */}
+    <div className="border-r border-gray-200 flex flex-col bg-[#F4F6FA]">
+      <div className="py-10 border-b border-gray-200 text-center">
+        <h3 className="text-2xl font-serif font-semibold text-slate-900">
+          RetailSync
+        </h3>
+      </div>
+
+      {features.map((f, i) => (
+        <div
+          key={i}
+          className="py-8 px-8 border-b border-gray-200 flex items-center gap-3"
+        >
+          <span className="text-blue-600 font-bold">✓</span>
+          <span className="text-sm font-medium text-slate-800">{f.competitor1}</span>
+        </div>
+      ))}
+    </div>
+
+    {/* Column 3 */}
+    <div className="flex flex-col bg-[#FDF4F4]">
+      <div className="py-10 border-b border-gray-200 text-center">
+        <h3 className="text-2xl font-serif font-semibold text-slate-900">
+          StyleView
+        </h3>
+      </div>
+
+      {features.map((f, i) => (
+        <div
+          key={i}
+          className="py-8 px-8 border-b border-gray-200 flex items-center gap-3"
+        >
+          <span className="text-red-600 font-bold">×</span>
+          <span className="text-sm font-medium text-slate-800">{f.competitor2}</span>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</motion.div>
 
     </motion.section>
   );

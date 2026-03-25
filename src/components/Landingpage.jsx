@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { fadeUp, fadeLeft, fadeRight, staggerContainer } from "./Animation";
+import { fadeUp, fadeLeft, fadeRight, staggerContainer, fadeIn } from "./Animation";
 const Hero = () => {
   return (
  <motion.div
@@ -14,7 +14,7 @@ const Hero = () => {
         <img src="/img1.jpg" className="w-full h-full object-cover object-top" />
       </div>
       {/* Hero content */}
-      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 pt-32">
+      <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center pt-32">
         <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl font-serif font-medium leading-tight text-white max-w-4xl">
           Virtual Try On — Upload Your Photo and Try Clothes
         </motion.h1>
@@ -56,11 +56,11 @@ const Features = () => {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true,  amount: 0.2 }}
-        className="max-w-6xl mx-auto px-6 py-20"
+        className=" px-6 py-8"
       >  
         {/* Trusted By Section */}
-    <section className="py-12 border-b border-gray-100">
-      <div className="max-w-6xl mx-auto pl-4 ">
+    <section className="py-8 border-b border-gray-100">
+      <div className="max-w-6xl">
         <p className="text-xs uppercase tracking-widest text-gray-400 mb-8 ">
           Trusted by:
         </p>
@@ -93,7 +93,7 @@ const Features = () => {
 
       {/* Hero Content Section */}
     
-      <section className="py-8 max-w-6xl mx-auto px-6">
+      <section className="py-8 max-w-6xl">
         <motion.span variants={fadeUp} className="text-green-600 font-semibold text-sm">Benefits</motion.span>
         <motion.h1 variants={fadeUp} className="text-5xl md:text-6xl font-serif mt-6 mb-4">We’ve cracked the code.</motion.h1>
         <motion.p variants={fadeUp}className="text-gray-500 text-lg max-w-xl">
@@ -101,7 +101,7 @@ const Features = () => {
         </motion.p>
 
         {/* Benefits Grid */}
-        <div className="grid md:grid-cols-4 gap-12 mt-20">
+        <div className="grid md:grid-cols-4 gap-20 mt-20">
           {benefits.map((benefit, index) => (
             <motion.div variants={fadeUp} key={index} className="space-y-4 border-t border-gray-100 pt-6">
               <span className="text-xl">{benefit.icon}</span>
@@ -115,7 +115,7 @@ const Features = () => {
       </section>
 
       {/* Hero Image / Video Section */}
-      <section className="px-8 py-12">
+      <section className="py-8">
         <motion.div variants={fadeUp} className="max-w-7xl mx-auto overflow-hidden rounded-3xl shadow-2xl">
           <img 
             src="hero.jpg"
@@ -158,10 +158,10 @@ const Process = () => {
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true,  amount: 0.2 }}className="bg-white py-20 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+        viewport={{ once: true,  amount: 0.2 }}className="bg-white py-8 flex flex-col lg:flex-row items-center w-full gap-16">
       
       {/* Left Content Column */}
-      <div className="flex-1 space-y-8 px-20">
+      <div className="flex-1 px-8 space-y-8">
         <motion.h2  variants={fadeUp} className="text-5xl font-serif text-slate-900">See the Big Picture</motion.h2>
 
         <motion.p variants={fadeUp}  className="text-gray-500 text-lg max-w-md leading-relaxed">
@@ -171,7 +171,7 @@ const Process = () => {
         {/* Numbered List */}
         <div className="divide-y divide-gray-100 border-t border-gray-100 mt-10">
           {steps.map((step) => (
-            <motion.div variants={fadeUp}  key={step.id} className="py-6 flex gap-6 items-start group">
+            <motion.div variants={fadeUp}  key={step.id} className="py-8 flex gap-6 items-start group">
               <span className="text-xs font-mono text-gray-400 mt-1">{step.id}</span>
 
               <div className="space-y-1">
@@ -193,7 +193,7 @@ const Process = () => {
       </div>
 
       {/* Right Image Column */}
-      <motion.div variants={fadeRight}  className="flex-1 w-full mx-auto pr-12">
+      <motion.div variants={fadeRight}  className="flex-1 w-full mr-6">
         <div className="relative rounded-[3rem] overflow-hidden bg-[#D9CDB7] aspect-4/6">
           <img
             src="/tryon.jpg"
@@ -248,11 +248,11 @@ const Choose = () => {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true,amount: 0.3 }}
-        className="bg-white py-20 px-20 text-center">
+        className="bg-white py-8 text-center">
 
       {/* Header Section */}
-      <div className="max-w-3xl mx-auto mb-16 space-y-4"
-      >        <span className="text-[#A3B18A] font-mono text-sm uppercase tracking-widest">
+      <div className="mx-auto mb-16 space-y-4">        
+        <span className="text-[#A3B18A] font-mono text-sm uppercase tracking-widest">
           Efficiency
         </span>
 
@@ -271,13 +271,13 @@ const Choose = () => {
       </div>
 
       {/* Comparison Table */}
-      <motion.div variants={fadeUp} className="max-w-6xl mx-auto border border-gray-200 rounded-[2.5rem] overflow-hidden shadow-md ">
+      <motion.div variants={fadeUp} className=" border border-gray-200 rounded-[2.5rem] overflow-hidden shadow-md ">
         <div className="grid grid-cols-3 bg-white">
           
           {/* Column 1 */}
           <div className="border-r border-gray-200 flex flex-col bg-[#F9FBF4]">
             <div className="py-10 border-b border-gray-200">
-              <h3 className="text-2xl font-serif font-semibold text-slate-900">
+              <h3 className="text-2xl font-serif font-semibold text-slate-900 text-left px-14">
                 Our Platform
               </h3>
             </div>
@@ -295,7 +295,7 @@ const Choose = () => {
           {/* Column 2 */}
           <div className="border-r border-gray-200 flex flex-col bg-[#F4F6FA]">
             <div className="py-10 border-b border-gray-200">
-              <h3 className="text-2xl font-serif font-semibold text-slate-900">
+              <h3 className="text-2xl font-serif font-semibold text-slate-900 text-left px-14">
                 RetailSync
               </h3>
             </div>
@@ -303,7 +303,7 @@ const Choose = () => {
             {features.map((f, i) => (
               <div key={i} className="py-8 px-8 border-b border-gray-200 flex items-center gap-3 text-left">
                 <span className="text-blue-600 font-bold">✓</span>
-                <span className="text-sm font-medium text-slate-800">
+                <span className="text-sm font-medium text-slate-800 ">
                   {f.competitor1}
                 </span>
               </div>
@@ -313,7 +313,7 @@ const Choose = () => {
           {/* Column 3 */}
           <div className="flex flex-col bg-[#FDF4F4]">
             <div className="py-10 border-b border-gray-200">
-              <h3 className="text-2xl font-serif font-semibold text-slate-900">
+              <h3 className="text-2xl font-serif font-semibold text-slate-900 text-left px-14">
                 StyleView
               </h3>
             </div>
@@ -338,25 +338,25 @@ const Choose = () => {
 const Testimonial = () => {
   return (
     <motion.section
-    variants={fadeLeft}
+    variants={staggerContainer}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true,amount: 0.3 }}
-         className="bg-white py-12 px-20 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+         className="bg-white py-8 flex flex-col lg:flex-row items-center gap-20">
       
       {/* Left Column: Artistic/Glamorous Image */}
       <div className="flex-1 w-full">
-        <div className="relative rounded-[3rem] overflow-hidden aspect-square shadow-2xl shadow-gray-200">
+        <motion.div variants={fadeLeft} className="relative rounded-[3rem] overflow-hidden aspect-square shadow-2xl shadow-gray-200">
           <img 
             src="/img3.jpg"
             alt="Customer Testimonial" 
             className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000"
           />
-        </div>
+        </motion.div>
       </div>
 
       {/* Right Column: The Quote */}
-      <div className="flex-1 space-y-8">
+      <div className="flex-1">
         <motion.div 
         variants={fadeUp}
         className="space-y-6">
@@ -364,13 +364,13 @@ const Testimonial = () => {
           {/* Large Quote Mark */}
           <span className="text-8xl font-serif text-[#E3F2C1] leading-none select-none">“</span>
           
-          <p className="text-4xl md:text-5xl font-serif text-slate-900 leading-[1.2] mt-8">
+          <p className="text-3xl md:text-4xl font-serif text-slate-900 leading-[1.2] mt-8 text-center">
             I was skeptical, but the virtual try-on has completely transformed how I shop. The visualization is so clear and effortless.
           </p>
          
           <div className="pt-6 border-t border-gray-100">
-            <h4 className="text-xl font-bold text-slate-900">Kusuma  Bhandari</h4>
-            <p className="text-[#A3B18A] font-mono text-sm uppercase tracking-widest mt-1">
+            <h4 className="text-xl font-bold text-slate-900 text-center">Kusuma  Bhandari</h4>
+            <p className="text-[#A3B18A] font-mono text-sm uppercase tracking-widest mt-1 text-center">
               Head of Style
             </p>
           </div>
@@ -384,15 +384,15 @@ const Testimonial = () => {
 
 const Connect = () => {
   return (
-    <section className="bg-white py-20 text-center">
+    <section className="bg-white py-8 text-center">
 
       {/* Top Numbered Steps */}
       <motion.div
-       variants={fadeLeft}
+       variants={fadeIn}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true,amount: 0.3 }}
-        className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 text-left place-items-center px-20 ">
+        className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20 text-left place-items-center">
         {[
           { num: "01", text: "Fill out our quick form with your needs." },
           { num: "02", text: "Receive a personalized style analysis." },
@@ -413,8 +413,8 @@ const Connect = () => {
        initial="hidden"
         whileInView="show"
         viewport={{ once: true,amount: 0.3 }}
-        className="max-w-7xl mx-auto mb-16 px-8 py-8 ">
-        <div className="rounded-[3rem] overflow-hidden aspect-21/9 shadow-sm">
+        className="max-w-7xl mb-16 py-8 ">
+        <div className="rounded-[3rem] overflow-hidden aspect-21/9 shadow-sm ">
           <img
             src="/img2.jpg"
             alt="Nature Aerial Perspective"
@@ -437,7 +437,7 @@ const Connect = () => {
         </p>
 
         <div className="pt-4">
-          <button className="bg-[#588157] text-white px-12 py-5 rounded-full font-medium hover:bg-[#3a5a40] transition-all shadow-lg shadow-green-100">
+          <button className="bg-[#588157] text-white px-12 py-3 rounded-full font-medium hover:bg-[#3a5a40] transition-all shadow-lg shadow-green-100">
             Learn More
           </button>
         </div>
@@ -456,12 +456,29 @@ const LandingPage = () => {
   return (
     <>
 
-      <Hero />
-      <Features />
-      <Process />
-      <Choose />
-      <Testimonial />
-      <Connect />
+     <div>
+        <Hero />
+      </div>
+
+      <div className="mx-7">
+        <Features />
+      </div>
+
+      <div className="mx-7">
+        <Process />
+      </div>
+
+      <div className="mx-7">
+        <Choose />
+      </div>
+
+      <div className="mx-7">
+        <Testimonial />
+      </div>
+
+      <div className="mx-7">
+        <Connect />
+      </div>
     </>
   );
 };

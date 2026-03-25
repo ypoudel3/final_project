@@ -1,6 +1,7 @@
 import React from "react";
 import { ImagePlus } from "lucide-react";
 import { motion } from "framer-motion";
+import { div } from "framer-motion/client";
 
 const containerVariants = {
   hidden: {},
@@ -74,9 +75,11 @@ const UploadSection = ({ title }) => {
 
 const TryOnUI = () => {
   return (
-    <div className="min-h-screen bg-[#ededea] p-8 mx-7 my-3 rounded-2xl">
+  
+<>
+    <div className="min-h-screen bg-linear-to-br from-[#a3b18a] to-[#f5f5dc] py-8 mx-7 my-4 rounded-2xl">
       <motion.div
-        className="max-w-6xl mx-auto border-2 border-[#3B5249] rounded-2xl p-6"
+        className="max-w-6xl mx-auto rounded-2xl p-6"
         variants={containerVariants}
         initial="hidden"
         animate="show"
@@ -96,6 +99,7 @@ const TryOnUI = () => {
         </motion.button>
       </motion.div>
     </div>
+    </>
   );
 };
 

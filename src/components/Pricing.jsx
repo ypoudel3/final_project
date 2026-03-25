@@ -81,10 +81,10 @@ const PriceCard = ({ plan, isYearly }) => {
   
   return (
     <div className={cn(
-      "relative flex flex-col p-8 rounded-[2rem] border transition-all duration-500",
+      "relative flex flex-col p-8 rounded-4xl border transition-all duration-500",
       plan.isPopular 
         ? "bg-[#111116] border-purple-500/50 shadow-[0_0_40px_rgba(168,85,247,0.15)] scale-[1.03] z-10" 
-        : "bg-white/[0.02] border-white/5 hover:border-white/20"
+        : "bg-white/2 border-white/5 hover:border-white/20"
     )}>
       {/* Popular Badge */}
       {plan.isPopular && (
@@ -113,7 +113,7 @@ const PriceCard = ({ plan, isYearly }) => {
         Subscribe Now
       </button>
 
-      <div className="space-y-6 flex-grow">
+      <div className="space-y-6 grow">
         <div className="pb-5 border-b border-white/5">
           <p className="text-white text-sm font-semibold">{plan.credits} credits /year</p>
           <p className="text-gray-500 text-xs mt-1">equals {plan.images} images</p>
@@ -143,7 +143,7 @@ const Pricing = () => {
   const [billing, setBilling] = useState('yearly');
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0a0f] to-[#1c0b2a] text-white font-sans selection:bg-purple-500/30">
+    <div className="min-h-screen bg-linear-to-t from-[#0a0a0f] to-[#003B36] text-white font-sans selection:bg-purple-500/30">
       <div className="max-w-7xl mx-auto px-6 py-24">
         
         {/* Hero Section */}

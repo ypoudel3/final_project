@@ -12,7 +12,10 @@ export const fadeLeft = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { duration: 1.0 }
+    transition: { duration: 1.0,
+    ease: "easeOut"
+
+     }
   }
 };
 
@@ -21,8 +24,22 @@ export const fadeRight = {
   show: {
     opacity: 1,
     x: 0,
-    transition: { duration: 1.0 }
+    transition: { duration: 1.0,
+    ease: "easeOut"
+
+     }
   }
+};
+
+export const fadeIn = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: "easeOut",
+    },
+  },
 };
 
 export const staggerContainer = {

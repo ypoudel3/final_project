@@ -442,7 +442,7 @@ const Connect = () => {
         </p>
 
         <div className="pt-4">
-          <button className="bg-[#588157] text-white px-12 py-3 rounded-full font-medium hover:bg-[#3a5a40] transition-all shadow-lg shadow-green-100">
+          <button className=" bg-[#E3F2C1] text-black px-12 py-3 rounded-full font-medium hover:brightness-95">
             Learn More
           </button>
         </div>

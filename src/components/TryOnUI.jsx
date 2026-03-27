@@ -77,7 +77,7 @@ const TryOnUI = () => {
   return (
   
 <>
-    <div className="min-h-screen bg-linear-to-br from-[#a3b18a] to-[#f5f5dc] py-8 mx-7 my-4 rounded-2xl">
+    <div className="min-h-screen bg-[#ededea] py-8 mx-7 my-4 rounded-2xl">
       <motion.div
         className="max-w-6xl mx-auto rounded-2xl p-6"
         variants={containerVariants}

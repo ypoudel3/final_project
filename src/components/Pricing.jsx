@@ -151,7 +151,7 @@ const Pricing = () => {
     <div className="relative my-2 min-h-screen mx-7 rounded-2xl overflow-hidden">
 
       {/* 🔥 Background Image */}
-      <div className="absolute inset-0 bg-[url('/cloth.jpg')] bg-cover bg-center" />
+      <div className="absolute inset-0 bg-[url('/cloth.jpg')] bg-cover bg-center brightness-110" />
 
       {/* 🔥 Content */}
       <div className="relative z-10 text-[#3B5249] font-sans">

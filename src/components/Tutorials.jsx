@@ -3,7 +3,7 @@ import { Upload, Shirt, Sparkles, ArrowRight } from 'lucide-react';
 import Navbar from "./Navbar.jsx";
 
 const StepCard = ({ number, title, description, Icon }) => (
-  <div className="group relative flex flex-col items-start p-8 rounded-2xl bg-gradient-to-b from-white/10 to-transparent border border-white/10 hover:border-purple-500/50 transition-all duration-500 backdrop-blur-sm">
+  <div className="group relative flex flex-col items-start p-8 rounded-2xl bg-linear-to-b from-white/10 to-transparent border border-white/10 hover:border-purple-500/50 transition-all duration-500 backdrop-blur-sm">
     {/* Step Number Badge */}
     <div className="absolute -top-4 -right-4 w-12 h-12 flex items-center justify-center rounded-full bg-[#1a1a2e] border border-purple-500/30 text-purple-400 font-bold shadow-xl">
       {number}
@@ -44,13 +44,13 @@ const Tutorials = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0a0f] to-[#1c0b2a] text-white flex flex-col items-center justify-center px-6 py-20 font-sans selection:bg-purple-500/30">
+    <div className="min-h-screen bg-linear-to-b from-[#0a0a0f] to-[#1c0b2a] text-white flex flex-col items-center justify-center px-6 py-20 font-sans selection:bg-purple-500/30">
       {/* Background Glow Decor */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-purple-600/10 blur-[120px] rounded-full -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-150 h-75 bg-purple-600/10 blur-[120px] rounded-full -z-10" />
 
       {/* Header Section */}
       <header className="max-w-3xl text-center mb-20 space-y-6">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
+        <h1 className="text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-linear-to-b from-white to-gray-400">
           How to Use Virtual Try on System 
         </h1>
         <p className="text-gray-400 text-lg md:text-xl font-light leading-relaxed">

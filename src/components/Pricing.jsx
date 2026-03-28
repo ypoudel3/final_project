@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, X, Zap } from 'lucide-react';
+import { Check, X, Zap, ChevronDown } from 'lucide-react';
 
 const cn = (...classes) => classes.filter(Boolean).join(' ');
 
@@ -148,7 +148,7 @@ const Pricing = () => {
   const [billing, setBilling] = useState('yearly');
 
   return (
-    <div className="relative min-h-screen mx-7 rounded-2xl overflow-hidden">
+    <div className="relative my-2 min-h-screen mx-7 rounded-2xl overflow-hidden">
 
       {/* 🔥 Background Image */}
       <div className="absolute inset-0 bg-[url('/cloth.jpg')] bg-cover bg-center" />
@@ -205,3 +205,4 @@ const Pricing = () => {
 };
 
 export default Pricing;
+

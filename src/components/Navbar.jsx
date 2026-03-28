@@ -10,10 +10,10 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`z-50 rounded-2xl transition-colors duration-300 mx-7 my-3
+        className={`z-50 rounded-2xl transition-colors duration-300 mx-7 
           ${isHome 
             ? " absolute top-0 left-0 right-0 text-white" 
-            : "bg-[#ededea] text-[#3B5249]"}
+            : "text-[#3B5249]"}
         `}
       >
          <div className="flex justify-between items-center">

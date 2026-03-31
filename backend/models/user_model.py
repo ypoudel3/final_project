@@ -2,14 +2,7 @@
 from database import users_collection
 
 def create_user(user_data):
-    result = users_collection.insert_one(user_data)
-
-    print("✅ INSERT SUCCESS")
-    print("ID:", result.inserted_id)
-    print("DB:", users_collection.database.name)
-    print("COLLECTION:", users_collection.name)
-
-    return result
+    return users_collection.insert_one(user_data)
 
 def find_user_by_email(email):
     return users_collection.find_one({"email": email})

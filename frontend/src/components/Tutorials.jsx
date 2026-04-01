@@ -3,7 +3,7 @@ import { Upload, Shirt, Sparkles, ArrowRight } from 'lucide-react';
 import Navbar from "./Navbar.jsx";
 
 const StepCard = ({ number, title, description, Icon }) => (
-  <div className="group relative flex flex-col items-start p-8 rounded-2xl bg-linear-to-b from-white/10 to-transparent border border-white/10 hover:border-purple-500/50 transition-all duration-500 backdrop-blur-sm">
+  <div className="group relative flex flex-col items-start p-8 rounded-2xl bg-linear-to-b from-white/10 to-transparent border border-black/10 hover:border-purple-500/50 transition-all duration-500 backdrop-blur-sm">
     {/* Step Number Badge */}
     <div className="absolute -top-4 -right-4 w-12 h-12 flex items-center justify-center rounded-full bg-[#1a1a2e] border border-purple-500/30 text-purple-400 font-bold shadow-xl">
       {number}

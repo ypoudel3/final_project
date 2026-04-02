@@ -96,7 +96,7 @@ const FAQ = () => {
   const [open, setOpen] = useState(null);
 
   return (
-    <div className="max-w-4xl mx-auto my-20">
+    <div className="max-w-4xl mx-auto mb-20">
       <motion.h2
         variants={itemVariants}
         className="text-4xl font-bold text-center mb-4 text-[#3B5249]"
@@ -151,7 +151,7 @@ const FAQ = () => {
 const TryOnUI = () => {
   return (
     <>
-    <div className="min-h-screen bg-[#ededea] py-8 mx-7 my-20 rounded-2xl">
+    <div className="min-h-screen bg-[#ededea] py-8 mx-7 my-30 rounded-2xl">
       <motion.div
         className="max-w-6xl mx-auto rounded-2xl p-6"
         variants={containerVariants}

@@ -130,8 +130,16 @@ const Navbar = () => {
               <Link to="/Pricing">Pricing</Link>
               <Link to="/Tutorials">Tutorials</Link>
               <Link to="/Mygallery">My Gallery</Link>
-            </ul>
-          </div>
+
+              
+           <Link 
+      to="/hosting/today" 
+      className="border border-[#588157] px-4 py-1 rounded-full hover:bg-[#588157] hover:text-white transition-all"
+    >
+      Switch as Seller
+    </Link>
+  </ul>
+</div>
 
           {/* Login Button */}
           <div className="pr-12">

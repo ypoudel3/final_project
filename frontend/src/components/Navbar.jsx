@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const location = useLocation();
   const isHome = location.pathname === "/";
-
+  const [scrolled, setScrolled] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
@@ -12,6 +12,19 @@ const Navbar = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+
+  useEffect(() => {
+     if (!isHome) return;
+  const handleScroll = () => {
+    setScrolled(window.scrollY > 50); // trigger after 50px
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, []);
 
   const API = "http://127.0.0.1:5000";
 
@@ -72,9 +85,12 @@ const Navbar = () => {
         className={`z-50 transition-colors duration-300 mx-7 fixed
           ${
             isHome
-              ? " absolute top-0 left-0 right-0 text-white"
-              : "text-[#3B5249] absolute top-0 left-0 right-0 bg-gray-100"
+          ? scrolled
+             ? "bg-gray-100 rounded-2xl shadow-md text-[#3B5249]  absolute top-0 left-0 right-0"
+             :" absolute top-0 left-0 right-0 text-white"
+          : "text-[#3B5249] absolute top-0 left-0 right-0 bg-gray-100"
           }
+        
         `}
       >
         <div className="flex justify-between items-center">

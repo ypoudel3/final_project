@@ -165,113 +165,56 @@ const Navbar = () => {
       </nav>
 
       {/* AUTH MODAL */}
-      {isAuthModalOpen && (
-        <div
-          className="fixed inset-0 flex items-center justify-center z-50"
-          onClick={() => setIsAuthModalOpen(false)}
+     {isAuthModalOpen && (
+  <div
+    className="fixed inset-0 flex items-center justify-center mt-18 z-50"
+    onClick={() => setIsAuthModalOpen(false)}
+  >
+    <div
+      className={`p-6 rounded-2xl shadow-xl max-w-md w-full transition-all duration-300 ${
+        isHome && !scrolled
+          ? "bg-gray-300/20 backdrop-blur-md border border-white"
+          : "bg-gray-200 border border-gray-300"
+      }`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {showSignUp ? (
+        <form
+          className={`flex flex-col items-center ${
+            isHome && !scrolled
+              ? "[&_input]:text-white [&_input]:border-white [&_input::placeholder]:text-white/60 [&_h1]:text-white [&_button:first-child]:text-white [&_.submit-btn]:bg-white [&_.submit-btn]:text-black [&_.footer-text]:text-gray-300 [&_.footer-link]:text-white"
+              : "[&_input]:text-[#3B5249] [&_input]:border-[#3B5249] [&_input::placeholder]:text-[#3B5249] [&_h1]:text-[#3B5249] [&_button:first-child]:text-[#3B5249] [&_.submit-btn]:bg-[#3B5249] [&_.submit-btn]:text-white [&_.footer-text]:text-gray-500 [&_.footer-link]:text-[#3B5249]"
+          }`}
         >
-          <div
-            className="bg-gray-300/20 backdrop-blur-md border border-white p-6 rounded-xl shadow-xl max-w-md w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {showSignUp ? (
-              <form className="flex flex-col items-center">
-                <button
-                  type="button"
-                  onClick={() => setShowSignUp(false)}
-                  className="self-start text-white text-xl mb-4"
-                >
-                  ←
-                </button>
-
-                <h1 className="text-2xl mb-4 text-white font-bold">
-                  Sign up
-                </h1>
-
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="bg-transparent border-b-2 text-white w-full h-12 mt-3 outline-none"
-                />
-
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-transparent border-b-2 text-white w-full h-12 mt-3 outline-none"
-                />
-
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="bg-transparent border-b-2 text-white w-full h-12 mt-3 outline-none"
-                />
-
-                <button
-                  onClick={handleSignup}
-                  className="rounded-full w-28 h-10 mt-8 bg-white text-black"
-                >
-                  Sign up
-                </button>
-              </form>
-            ) : (
-              <form className="flex flex-col items-center">
-                <button
-                  type="button"
-                  onClick={() => setIsAuthModalOpen(false)}
-                  className="self-start text-white text-xl mb-4"
-                >
-                  ←
-                </button>
-
-                <h1 className="text-2xl mb-4 font-bold text-white">
-                  Log in
-                </h1>
-
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-transparent border-b-2 text-white w-full h-12 mt-3 outline-none"
-                />
-
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="bg-transparent border-b-2 text-white w-full h-12 mt-3 outline-none"
-                />
-
-                <button
-                  onClick={handleLogin}
-                  className="rounded-full w-28 h-10 mt-6 bg-white text-black"
-                >
-                  Log in
-                </button>
-
-                <div className="flex mt-4 text-sm">
-                  <span className="text-gray-300">
-                    Don't have an account?
-                  </span>
-                  <span
-                    className="text-white ml-2 cursor-pointer font-bold"
-                    onClick={() => setShowSignUp(true)}
-                  >
-                    Sign up
-                  </span>
-                </div>
-              </form>
-            )}
+          <button type="button" onClick={() => setShowSignUp(false)} className="self-start text-xl mb-4">←</button>
+          <h1 className="text-2xl mb-4 font-bold">Sign up</h1>
+          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none" />
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none" />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none" />
+          <button onClick={handleSignup} className="submit-btn rounded-full w-28 h-10 mt-8 cursor-pointer">Sign up</button>
+        </form>
+      ) : (
+        <form
+          className={`flex flex-col items-center ${
+            isHome && !scrolled
+              ? "[&_input]:text-white [&_input]:border-white [&_input::placeholder]:text-white/60 [&_h1]:text-white [&_button:first-child]:text-white [&_.submit-btn]:bg-white [&_.submit-btn]:text-black [&_.footer-text]:text-gray-300 [&_.footer-link]:text-white"
+              : "[&_input]:text-[#3B5249] [&_input]:border-[#3B5249] [&_input::placeholder]:text-[#3B5249] [&_h1]:text-[#3B5249] [&_button:first-child]:text- [&_.submit-btn]:bg-[#3B5249] [&_.submit-btn]:text-white [&_.footer-text]:text-gray-500 [&_.footer-link]:text-[#3B5249]"
+          }`}
+        >
+          <button type="button" onClick={() => setIsAuthModalOpen(false)} className="self-start text-xl mb-4">←</button>
+          <h1 className="text-2xl mb-4 font-bold ">Log in</h1>
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none" />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none" />
+          <button onClick={handleLogin} className="submit-btn rounded-full w-28 h-10 mt-6 cursor-pointer">Log in</button>
+          <div className="flex mt-4 text-sm">
+            <span className="footer-text">Don't have an account?</span>
+            <span className="footer-link ml-2 cursor-pointer font-bold" onClick={() => setShowSignUp(true)}>Sign up</span>
           </div>
-        </div>
+        </form>
       )}
+    </div>
+  </div>
+)}
     </>
   );
 };

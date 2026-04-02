@@ -10,7 +10,7 @@ const Hero = () => {
       viewport={{ once: true }}
       className="relative"
     >
-    <div className="w-full h-dvh overflow-hidden">
+    <div className="w-dvw h-dvh overflow-hidden">
         <img src="/img1.jpg" className="w-full h-full object-cover object-top" />
       </div>
       {/* Hero content */}
@@ -21,7 +21,7 @@ const Hero = () => {
         <motion.p variants={fadeUp} className="mt-6 text-lg text-white max-w-2xl">
           Try on different clothing styles in one click without a physical fitting room.
         </motion.p>
-        <motion.button variants={fadeUp} className="mt-8 bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition">
+        <motion.button variants={fadeUp} className="mt-8 bg-[#588157] text-white px-6 py-3 rounded-full font-semibold hover:scale-95 cursor-pointer">
           Lets Explore →
         </motion.button>
       </div>

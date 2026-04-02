@@ -6,6 +6,7 @@ import TryOnUI from "./components/TryOnUI.jsx";
 import Tutorials from "./components/Tutorials.jsx";
 import Pricing from "./components/Pricing.jsx";
 import Mygallery from "./components/Mygallery.jsx";
+import SellerLogin from "./components/SellerLogin.jsx";
 import { TodayPage, ListingsPage, MessagesPage } from "./components/SellerPages.jsx";
 function App() {
   return (
@@ -19,15 +20,12 @@ function App() {
           <Route path="/Tutorials" element={<Tutorials />} />
           <Route path="/Pricing" element={<Pricing />} />
           <Route path="/Mygallery" element={<Mygallery />} />
-        </Route>
-
-        {/* --- SELLER DASHBOARD (Hosting View) --- */}
-        {/* This "element" acts as a wrapper that includes SellerNavbar only */}
-        <Route path="/hosting" element={<SellerLayout />}>
-          <Route path="today" element={<TodayPage />} />
-          <Route path="listings" element={<ListingsPage />} />
-          <Route path="messages" element={<MessagesPage />} />
-        </Route>
+          <Route path="/layout" element={<SellerLayout />} />
+          <Route path="/today" element={<TodayPage />} />
+          <Route path="/login" element={<SellerLogin/>}/>
+          <Route path="/listings" element={<ListingsPage />} />
+          <Route path="/messages" element={<MessagesPage />} />
+      </Route>
       </Routes>
     </BrowserRouter>
   );

@@ -151,7 +151,7 @@ const Navbar = () => {
 </div>
 <div className="flex justify-between">
  <Link 
-      to="/hosting/today" 
+      to="/login" 
       className=" hover:bg-[#588157] hover:text-white transition-all font-semibold p-2 rounded-xl"
     >
       Switch to Seller

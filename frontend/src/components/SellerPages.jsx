@@ -77,7 +77,7 @@ export const ListingsPage = () => {
 
       {isOpen && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-[2rem] shadow-xl w-96">
+          <div className="bg-white p-8 rounded-4xl shadow-xl w-96">
             <h2 className="text-xl font-bold mb-4">New Listing</h2>
             
             <input 
@@ -133,13 +133,13 @@ export const TodayPage = () => {
       
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Card 1: The Dynamic Action Message */}
-        <div className="p-8 bg-white rounded-[2rem] shadow-sm border border-gray-100">
+        <div className="p-8 bg-white rounded-4xl shadow-sm border border-gray-100">
           <h3 className="text-gray-400 uppercase text-xs font-bold tracking-widest mb-2">Status</h3>
           <p className="text-xl font-medium text-gray-800">{stats.action_required}</p>
         </div>
 
         {/* Card 2: The Inventory Count */}
-        <div className="p-8 bg-white rounded-[2rem] shadow-sm border border-gray-100">
+        <div className="p-8 bg-white rounded-4xl shadow-sm border border-gray-100">
           <h3 className="text-gray-400 uppercase text-xs font-bold tracking-widest mb-2">Total Listings</h3>
           <p className="text-4xl font-serif font-bold text-[#3B5249]">{stats.listing_count}</p>
           <p className="text-sm text-gray-400 mt-1">Items in your DrapeAI collection</p>

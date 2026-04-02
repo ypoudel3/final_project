@@ -75,19 +75,19 @@ const UploadSection = ({ title }) => {
 const faqs = [
   {
     q: "How accurate is the virtual try-on?",
-    a: "Our AI gives highly realistic results using body mapping and cloth simulation.",
+    a: "Our AI-powered virtual try-on delivers highly realistic results by leveraging advanced body mapping and fabric simulation technologies, ensuring garments fit and drape naturally on your image.",
   },
   {
     q: "What clothing can I try?",
-    a: "You can try shirts, dresses, jackets, and more.",
+    a: "You can explore a wide variety of clothing options, including shirts, dresses, jackets, and many other styles, with new categories continuously being added.",
   },
   {
     q: "How long does generation take?",
-    a: "Usually just a few seconds depending on server load.",
+    a: "Generation typically takes just a few seconds, although processing time may vary slightly depending on current server demand.",
   },
   {
     q: "Can I use images commercially?",
-    a: "Yes, depending on your subscription plan.",
+    a: "Yes, commercial usage is permitted based on your selected subscription plan. Please review your plan details for specific usage rights.",
   },
 ];
 

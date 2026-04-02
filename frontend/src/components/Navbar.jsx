@@ -82,11 +82,11 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`z-50 transition-colors duration-300 mx-7 fixed
+        className={`z-50 transition-colors duration-300 px-7 fixed
           ${
             isHome
           ? scrolled
-             ? "bg-gray-100 rounded-2xl shadow-md text-[#3B5249]  absolute top-0 left-0 right-0"
+             ? "bg-gray-100 shadow-md text-[#3B5249] absolute top-0 left-0 right-0"
              :" absolute top-0 left-0 right-0 text-white"
           : "text-[#3B5249] absolute top-0 left-0 right-0 bg-gray-100"
           }

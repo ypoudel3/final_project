@@ -140,7 +140,7 @@ const Navbar = () => {
           </Link>
 
           {/* Menu */}
-          <div className="flex flex-1 justify-center">
+          <div className="absolute left-1/2 transform -translate-x-1/2">
             <ul className="flex gap-10 items-center font-semibold">
               <Link to="/UI">Virtual Try-On Studio</Link>
               <Link to="/Pricing">Pricing</Link>
@@ -152,7 +152,7 @@ const Navbar = () => {
 <div className="flex justify-between">
  <Link 
       to="/hosting/today" 
-      className=" rounded-full hover:bg-[#588157] hover:text-white transition-all font-semibold"
+      className=" hover:bg-[#588157] hover:text-white transition-all font-semibold p-2 rounded-xl"
     >
       Switch to Seller
     </Link>

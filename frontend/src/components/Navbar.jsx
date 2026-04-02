@@ -69,11 +69,11 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`z-50 rounded-2xl transition-colors duration-300 mx-7 
+        className={`z-50 transition-colors duration-300 mx-7 fixed
           ${
             isHome
               ? " absolute top-0 left-0 right-0 text-white"
-              : "text-[#3B5249]"
+              : "text-[#3B5249] absolute top-0 left-0 right-0 bg-gray-100"
           }
         `}
       >
@@ -131,25 +131,20 @@ const Navbar = () => {
               <Link to="/Tutorials">Tutorials</Link>
               <Link to="/Mygallery">My Gallery</Link>
 
-              
-           <Link 
-      to="/hosting/today" 
-      className="border border-[#588157] px-4 py-1 rounded-full hover:bg-[#588157] hover:text-white transition-all"
-    >
-      Switch as Seller
-    </Link>
   </ul>
 </div>
-
+<div className="flex justify-between">
+ <Link 
+      to="/hosting/today" 
+      className=" rounded-full hover:bg-[#588157] hover:text-white transition-all font-semibold"
+    >
+      Switch to Seller
+    </Link>
           {/* Login Button */}
-          <div className="pr-12">
-            <button
-              onClick={() => setIsAuthModalOpen(true)}
-              className="bg-[#588157] px-6 py-2 rounded-full hover:bg-green-800 text-white"
-            >
-              Log in
-            </button>
+          <div className="pr-4 flex items-center pl-7">
+            <i onClick={() => setIsAuthModalOpen(true)} className=" fa-regular fa-user cursor-pointer"></i>
           </div>
+       </div>
         </div>
       </nav>
 

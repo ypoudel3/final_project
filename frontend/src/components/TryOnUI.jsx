@@ -151,7 +151,7 @@ const FAQ = () => {
 const TryOnUI = () => {
   return (
     <>
-    <div className="min-h-screen bg-[#ededea] py-8 mx-7 my-2 rounded-2xl">
+    <div className="min-h-screen bg-[#ededea] py-8 mx-7 my-20 rounded-2xl">
       <motion.div
         className="max-w-6xl mx-auto rounded-2xl p-6"
         variants={containerVariants}

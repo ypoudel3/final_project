@@ -3,8 +3,8 @@ from flask import Blueprint, jsonify, request
 from database import listings_collection 
 from bson import json_util
 import json
-import os # 👈 Needed to handle folders
-from werkzeug.utils import secure_filename # 👈 Makes file names safe
+import os 
+from werkzeug.utils import secure_filename 
 
 seller_bp = Blueprint('seller', __name__)
 

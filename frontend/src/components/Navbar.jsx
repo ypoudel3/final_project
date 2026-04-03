@@ -96,11 +96,20 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/">
-            <div className="flex justify-center items-center">
+            <div className="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 400 420"
-                className="w-30 h-24"
+                className={`
+                  ${
+                    isHome
+                    ? scrolled
+                    ?"w-22 h-20"
+                    :"w-34 h-28"
+                  :"w-22 h-20"
+
+                  }`}
+
               >
                 <ellipse cx="200" cy="210" rx="158" ry="190" fill="none" stroke="currentColor" strokeWidth="5" />
                 <ellipse cx="200" cy="210" rx="148" ry="180" fill="none" stroke="currentColor" strokeWidth="5" />
@@ -156,6 +165,8 @@ const Navbar = () => {
     >
       Switch to Seller
     </Link>
+  
+
           {/* Login Button */}
           <div className="pr-4 flex items-center pl-7">
             <i onClick={() => setIsAuthModalOpen(true)} className=" fa-regular fa-user cursor-pointer"></i>

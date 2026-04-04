@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, {useContext, useState } from "react";
 import { ImagePlus, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { AuthContext } from "../context/AuthContext";
 
 // 🔹 Animation Variants
 const containerVariants = {
@@ -23,6 +24,8 @@ const itemVariants = {
 
 // 🔹 Upload Section
 const UploadSection = ({ title }) => {
+const { setIsAuthModalOpen } = useContext(AuthContext);
+  
   return (
     <motion.div variants={itemVariants} className="flex-1">
       <h2 className="text-xl font-semibold mb-4 text-center text-[#3B5249]">
@@ -43,6 +46,7 @@ const UploadSection = ({ title }) => {
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => setIsAuthModalOpen(true)}
           className="bg-[#3B5249] text-white mt-2 px-6 py-2 rounded-2xl font-medium hover:bg-[#3a5a40]"
         >
           Upload File

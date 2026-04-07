@@ -13,36 +13,37 @@ import AuthModal from "./components/AuthModal.jsx";
 
 function App() {
   return (
-    <AuthProvider> {/* ✅ WRAP EVERYTHING */}
+    <AuthProvider>
       <BrowserRouter>
         <Routes>
 
-          {/* --- MAIN SITE (Buyer View) --- */}
+          {/* --- 1. MAIN SITE (Buyer View - Uses MainLayout) --- */}
           <Route element={<MainLayout />}>
-
             <Route path="/" element={<LandingPage />} />
             <Route path="/UI" element={<TryOnUI />} />
             <Route path="/Tutorials" element={<Tutorials />} />
             <Route path="/Pricing" element={<Pricing />} />
             <Route path="/Mygallery" element={<Mygallery />} />
-
-            {/* Seller Routes */}
-            <Route path="/layout" element={<SellerLayout />} />
-            <Route path="/today" element={<TodayPage />} />
+            
+            {/* The Login page belongs here so it has the Buyer Navbar */}
             <Route path="/login" element={<SellerLogin />} />
-            <Route path="/listings" element={<ListingsPage />} />
-            <Route path="/messages" element={<MessagesPage />} />
+          </Route>
 
+          {/* --- 2. SELLER DASHBOARD (Seller View - Uses SellerLayout) --- */}
+          <Route element={<SellerLayout />}>
+            {/* These are "nested" routes. 
+               They will render INSIDE the <Outlet /> of SellerLayout.
+            */}
+            <Route path="/hosting/today" element={<TodayPage />} />
+            <Route path="/hosting/listings" element={<ListingsPage />} />
+            <Route path="/hosting/messages" element={<MessagesPage />} />
           </Route>
 
         </Routes>
 
-        {/* ✅ GLOBAL MODAL (important) */}
         <AuthModal />
-
       </BrowserRouter>
     </AuthProvider>
   );
 }
-
 export default App;

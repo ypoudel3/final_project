@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SellerAuth() {
   const [isLogin, setIsLogin] = useState(true);
+  const navigate = useNavigate(); // 2. Initialize navigate
 
   const [form, setForm] = useState({
     businessName: "",
@@ -17,10 +19,39 @@ export default function SellerAuth() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(isLogin ? "Login" : "Signup", form);
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  // Choose endpoint based on isLogin state
+  const endpoint = isLogin ? '/api/seller/login' : '/api/seller/signup';
+
+  try {
+    const response = await fetch(`http://127.0.0.1:5000${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("Success:", data);
+      alert(isLogin ? "Welcome back!" : "Account created successfully!");
+      // Store the token if your backend returns one (JWT)
+      if (data.token) localStorage.setItem("token", data.token);
+
+      // 3. Redirect to the /today route from your App.jsx
+        navigate("/hosting/today");
+    } else {
+      alert(data.error || "Authentication failed");
+    }
+  } catch (error) {
+    console.error("Error connecting to server:", error);
+    alert("Server is not responding. Check if port 5000 is running.");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">

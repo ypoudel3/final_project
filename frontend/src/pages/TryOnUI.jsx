@@ -1,4 +1,4 @@
-import React, {useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { ImagePlus, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import { AuthContext } from "../context/AuthContext";
@@ -22,40 +22,92 @@ const itemVariants = {
   },
 };
 
-// 🔹 Upload Section
 const UploadSection = ({ title }) => {
-const { setIsAuthModalOpen } = useContext(AuthContext);
-  
+  const { user, setIsAuthModalOpen } = useContext(AuthContext);
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleUploadClick = () => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+    } else {
+      fileInputRef.current?.click();
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
   return (
     <motion.div variants={itemVariants} className="flex-1">
       <h2 className="text-xl font-semibold mb-4 text-center text-[#3B5249]">
         {title}
       </h2>
 
+      {/* Hidden File Input — uses ref instead of id to avoid collisions */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+
       {/* Upload Box */}
       <motion.div
         whileHover={{ scale: 1.03 }}
-        className="border-2 border-dashed border-gray-500 rounded-xl h-72 flex flex-col items-center justify-center text-gray-300 cursor-pointer hover:bg-gray-800/10 transition"
+        onClick={handleUploadClick}
+        className="border-2 border-dashed border-gray-500 rounded-xl h-72 flex flex-col items-center justify-center text-gray-300 cursor-pointer hover:bg-gray-800/10 transition overflow-hidden relative"
       >
-        <ImagePlus size={40} />
-
-        <p className="mt-3 text-md text-[#3B5249] text-center">
-          Upload Image <br /> Or
-        </p>
-
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setIsAuthModalOpen(true)}
-          className="bg-[#3B5249] text-white mt-2 px-6 py-2 rounded-2xl font-medium hover:bg-[#3a5a40]"
-        >
-          Upload File
-        </motion.button>
+        {preview ? (
+          // ✅ Show image preview after upload
+          <img
+            src={preview}
+            alt="Uploaded preview"
+            className="w-full h-full object-cover absolute inset-0"
+          />
+        ) : (
+          <>
+            <ImagePlus size={40} />
+            <p className="mt-3 text-md text-[#3B5249] text-center">
+              {image ? image.name : "Upload Image"} <br /> Or
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={(e) => {
+                e.stopPropagation(); // prevent double-trigger from parent div
+                handleUploadClick();
+              }}
+              className="bg-[#3B5249] text-white mt-2 px-6 py-2 rounded-2xl font-medium hover:bg-[#3a5a40]"
+            >
+              Upload File
+            </motion.button>
+          </>
+        )}
       </motion.div>
+
+      {/* Clear/Change button shown after upload */}
+      {image && (
+        <button
+          onClick={() => {
+            setImage(null);
+            setPreview(null);
+          }}
+          className="mt-2 text-sm text-red-400 hover:text-red-600 transition block mx-auto"
+        >
+          ✕ Remove image
+        </button>
+      )}
 
       {/* Examples */}
       <p className="text-gray-400 mt-4 mb-2">Examples</p>
-
       <div className="grid grid-cols-4 gap-3">
         {[1, 2, 3, 4].map((item) => (
           <motion.div
@@ -74,7 +126,6 @@ const { setIsAuthModalOpen } = useContext(AuthContext);
     </motion.div>
   );
 };
-
 // 🔹 FAQ DATA
 const faqs = [
   {

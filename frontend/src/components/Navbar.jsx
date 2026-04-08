@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const { setIsAuthModalOpen } = useContext(AuthContext);
+const { user, setIsAuthModalOpen, setUser } = useContext(AuthContext);
   const location = useLocation();
   const isHome = location.pathname === "/";
   const [scrolled, setScrolled] = useState(false);
@@ -108,7 +108,18 @@ const Navbar = () => {
     
               {/* Login Button */}
               <div className="pr-4 flex items-center pl-7">
-                <i onClick={() => setIsAuthModalOpen(true)} className=" fa-regular fa-user cursor-pointer"></i>
+                {user ? (
+  <div
+    onClick={() => {
+      localStorage.removeItem("user");
+      setUser(null);
+    }}
+    className="w-10 h-10 flex items-center justify-center rounded-full bg-black text-white font-bold cursor-pointer"
+  >
+    {user.username?.charAt(0).toUpperCase()}
+  </div>
+) : (
+                <i onClick={() => setIsAuthModalOpen(true)} className=" fa-regular fa-user cursor-pointer"></i>)}
               </div>
            </div>
             </div>

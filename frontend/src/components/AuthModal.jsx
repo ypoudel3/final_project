@@ -3,9 +3,11 @@ import { AuthContext } from "../context/AuthContext";
 import { useLocation } from "react-router-dom";
 
 const AuthModal = () => {
-  const { isAuthModalOpen, setIsAuthModalOpen } = useContext(AuthContext);
+  const { isAuthModalOpen, setIsAuthModalOpen, user, setUser } = useContext(AuthContext);
+
   const location = useLocation();
   const isHome = location.pathname === "/";
+
   const [localScrolled, setLocalScrolled] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [email, setEmail] = useState("");
@@ -14,7 +16,7 @@ const AuthModal = () => {
 
   const API = "http://127.0.0.1:5000";
 
-  // Scroll effect only for home page
+  // ✅ Scroll effect
   useEffect(() => {
     if (!isHome) return;
 
@@ -24,6 +26,14 @@ const AuthModal = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHome]);
 
+  // ✅ Load user from localStorage (FIXED)
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, [setUser]);
+
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
@@ -32,8 +42,10 @@ const AuthModal = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
       });
+
       const data = await res.json();
       alert(data.message);
+
       if (res.ok) {
         setShowSignUp(false);
         setIsAuthModalOpen(false);
@@ -52,107 +64,118 @@ const AuthModal = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
+
       const data = await res.json();
-      if (res.ok) {
+
+      if (res.ok && data.user) {
         alert("Login successful");
+
         localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user); // ✅ important
+
         setIsAuthModalOpen(false);
       } else {
-        alert(data.message);
+        alert(data.message || "Login failed");
       }
     } catch (err) {
       alert("Login failed. Try again.");
       console.error(err);
     }
-  };
+  }; 
 
   if (!isAuthModalOpen) return null;
 
   const baseClasses =
     "flex flex-col items-center w-full max-w-md p-6 rounded-2xl shadow-xl transition-all duration-300";
 
-  const themeClasses = isHome && !localScrolled
-    ? "bg-gray-300/20 backdrop-blur-md border border-white [&_input]:text-white [&_input]:border-white [&_input::placeholder]:text-white/60 [&_h1]:text-white [&_button:first-child]:text-white [&_.submit-btn]:bg-white [&_.submit-btn]:text-black [&_.footer-text]:text-gray-300 [&_.footer-link]:text-white"
-    : "bg-gray-200 border border-gray-300 [&_input]:text-[#3B5249] [&_input]:border-[#3B5249] [&_input::placeholder]:text-[#3B5249] [&_h1]:text-[#3B5249] [&_button:first-child]:text-[#3B5249] [&_.submit-btn]:bg-[#3B5249] [&_.submit-btn]:text-white [&_.footer-text]:text-gray-500 [&_.footer-link]:text-[#3B5249]";
+  const themeClasses =
+    isHome && !localScrolled
+      ? "bg-gray-300/20 backdrop-blur-md border border-white text-white"
+      : "bg-gray-200 border border-gray-300 text-[#3B5249]";
 
   return (
     <div
       className="fixed inset-0 flex items-center justify-center z-50"
       onClick={() => setIsAuthModalOpen(false)}
     >
-      <div className={`${baseClasses} ${themeClasses}`} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`${baseClasses} ${themeClasses}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         {showSignUp ? (
           <form className="flex flex-col items-center w-full">
-            <button
-              type="button"
-              onClick={() => setShowSignUp(false)}
-              className="self-start text-xl mb-4"
-            >
+            <button type="button" onClick={() => setShowSignUp(false)}>
               ←
             </button>
+
             <h1 className="text-2xl font-bold mb-4">Sign up</h1>
+
             <input
               type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none"
+              className="border-b-2 w-full h-12 mt-3 bg-transparent"
             />
+
             <input
               type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none"
+              className="border-b-2 w-full h-12 mt-3 bg-transparent"
             />
+
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none"
+              className="border-b-2 w-full h-12 mt-3 bg-transparent"
             />
+
             <button
               onClick={handleSignup}
-              className="submit-btn rounded-full w-28 h-10 mt-8 cursor-pointer"
+              className="mt-6 bg-black text-white px-6 py-2 rounded-full"
             >
               Sign up
             </button>
           </form>
         ) : (
           <form className="flex flex-col items-center w-full">
-            <button
-              type="button"
-              onClick={() => setIsAuthModalOpen(false)}
-              className="self-start text-xl mb-4"
-            >
+            <button type="button" onClick={() => setIsAuthModalOpen(false)}>
               ←
             </button>
+
             <h1 className="text-2xl font-bold mb-4">Log in</h1>
+
             <input
               type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none"
+              className="border-b-2 w-full h-12 mt-3 bg-transparent"
             />
+
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-transparent border-b-2 w-full h-12 mt-3 outline-none"
+              className="border-b-2 w-full h-12 mt-3 bg-transparent"
             />
+
             <button
               onClick={handleLogin}
-              className="submit-btn rounded-full w-28 h-10 mt-6 cursor-pointer"
+              className="mt-6 bg-black text-white px-6 py-2 rounded-full"
             >
               Log in
             </button>
-            <div className="flex mt-4 text-sm">
-              <span className="footer-text">Don't have an account?</span>
+
+            <div className="mt-4 text-sm">
+              <span>Don't have an account?</span>
               <span
-                className="footer-link ml-2 cursor-pointer font-bold"
+                className="ml-2 font-bold cursor-pointer"
                 onClick={() => setShowSignUp(true)}
               >
                 Sign up

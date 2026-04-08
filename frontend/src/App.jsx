@@ -43,6 +43,7 @@ function App() {
 
         <AuthModal />
       </BrowserRouter>
+    
     </AuthProvider>
   );
 }

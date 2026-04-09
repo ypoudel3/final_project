@@ -162,7 +162,7 @@ const API = "http://127.0.0.1:5000";
               ? localScrolled
                  ?"bg-[#3B5249] text-white"
                  :"bg-gray-200 text-[#3B5249]"
-              :"bg-black"
+              :"bg-[#3B5249] text-white"
               }`}>
               Sign up
             </button>
@@ -241,7 +241,7 @@ const API = "http://127.0.0.1:5000";
               ? localScrolled
                  ?"bg-[#3B5249] text-white"
                  :"bg-gray-200 text-[#3B5249]"
-              :"bg-black"
+              :"bg-[#3B5249] text-white"
               }`}>
               Log in
             </button>

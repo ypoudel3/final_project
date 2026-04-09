@@ -155,7 +155,15 @@ const API = "http://127.0.0.1:5000";
               className="border-b-2 w-full h-12 mt-3 bg-transparent"
             />
 
-            <button className="mt-6 bg-black text-white px-6 py-2 rounded-full">
+            <button className={`
+              mt-6 px-6 py-2 rounded-full font-semibold
+              ${
+                isHome
+              ? localScrolled
+                 ?"bg-[#3B5249] text-white"
+                 :"bg-gray-200 text-[#3B5249]"
+              :"bg-black"
+              }`}>
               Sign up
             </button>
 
@@ -226,12 +234,20 @@ const API = "http://127.0.0.1:5000";
   </div>
 
   {/* Button */}
-  <button className="mt-6 bg-black text-white px-6 py-2 rounded-full">
-    Log in
-  </button>
+ <button className={`
+              mt-6 px-6 py-2 rounded-full font-semibold
+              ${
+                isHome
+              ? localScrolled
+                 ?"bg-[#3B5249] text-white"
+                 :"bg-gray-200 text-[#3B5249]"
+              :"bg-black"
+              }`}>
+              Log in
+            </button>
 
   {/* Switch */}
-  <div className="mt-4 text-sm">
+  <div className=" text-sm">
     <span>Don't have an account?</span>
     <span
       className="ml-2 font-bold cursor-pointer"

@@ -13,7 +13,8 @@ const [showLogin, setShowLogin] = useState(true);
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [username, setUsername] = useState("");
-const API = "http://127.0.0.1:5000";
+const [error, setError] = useState("");
+const [success, setSuccess] = useState("");const API = "http://127.0.0.1:5000";
 
   // ✅ Scroll effect
   useEffect(() => {
@@ -35,54 +36,74 @@ const API = "http://127.0.0.1:5000";
 
   // ✅ Signup
   const handleSignup = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`${API}/auth/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
-      });
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-      const data = await res.json();
-      alert(data.message);
+  if (!username || !email || !password) {
+    return setError("All fields are required");
+  }
 
-      if (res.ok) {
+  try {
+    const res = await fetch(`${API}/auth/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      setError(data.message || "Signup failed");
+    } else {
+      setSuccess(data.message || "Account created 🎉");
+
+      setTimeout(() => {
         setShowSignUp(false);
         setShowLogin(true);
-      }
-    } catch (err) {
-      alert("Signup failed. Try again.");
-      console.error(err);
+        setSuccess("");
+      }, 1500);
     }
-  };
+  } catch (err) {
+    setError("Signup failed. Try again.");
+  }
+};
 
   // ✅ Login
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`${API}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-      const data = await res.json();
+  if (!email || !password) {
+    return setError("Email and password required");
+  }
 
-      if (res.ok && data.user) {
-        alert("Login successful");
+  try {
+    const res = await fetch(`${API}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setUser(data.user);
+    const data = await res.json();
 
+    if (res.ok && data.user) {
+      setSuccess("Login successful");
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
+
+      setTimeout(() => {
         setIsAuthModalOpen(false);
-      } else {
-        alert(data.message || "Login failed");
-      }
-    } catch (err) {
-      alert("Login failed. Try again.");
-      console.error(err);
+      }, 1000);
+    } else {
+      setError(data.message || "Invalid credentials");
     }
-  };
+  } catch (err) {
+    setError("Login failed. Try again.");
+  }
+};
 
   if (!isAuthModalOpen) return null;
 
@@ -154,7 +175,17 @@ const API = "http://127.0.0.1:5000";
               onChange={(e) => setPassword(e.target.value)}
               className="border-b-2 w-full h-12 mt-3 bg-transparent"
             />
+    {error && (
+  <p className="text-red-500 text-sm mt-2 text-center w-full">
+    {error}
+  </p>
+)}
 
+{success && (
+  <p className="text-green-500 text-sm mt-2 text-center w-full">
+    {success}
+  </p>
+)}
             <button className={`
               mt-6 px-6 py-2 rounded-full font-semibold
               ${
@@ -232,7 +263,17 @@ const API = "http://127.0.0.1:5000";
       Forgot password?
     </span>
   </div>
+{error && (
+  <p className="text-red-500 text-sm mt-2 text-center w-full">
+    {error}
+  </p>
+)}
 
+{success && (
+  <p className="text-green-500 text-sm mt-2 text-center w-full">
+    {success}
+  </p>
+)}
   {/* Button */}
  <button className={`
               mt-6 px-6 py-2 rounded-full font-semibold

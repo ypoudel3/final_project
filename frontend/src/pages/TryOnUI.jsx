@@ -73,7 +73,7 @@ const UploadSection = ({ title }) => {
         whileHover={user ? { scale: 1.03 } : {}}
         onClick={handleUploadClick}
         className={`border-2 border-dashed border-gray-500 rounded-xl h-72 flex flex-col items-center justify-center text-gray-300 transition overflow-hidden relative
-          ${user ? "cursor-pointer hover:bg-gray-800/10" : "cursor-not-allowed opacity-60"}
+          ${user ? "cursor-pointer hover:bg-gray-800/10" : "cursor-not-allowed opacity-90"}
         `}
       >
         {preview ? (
@@ -86,13 +86,13 @@ const UploadSection = ({ title }) => {
           <>
             <ImagePlus size={40} />
 
-            <p className="mt-3 text-md text-[#3B5249] text-center">
+            <p className="mt-3 text-md text-[#254539] text-center">
               {user
                 ? image
                   ? image.name
                   : "Upload Image"
                 : "Login to upload images"}
-              <br /> Or
+              <br />
             </p>
 
             <motion.button
@@ -105,10 +105,10 @@ const UploadSection = ({ title }) => {
               className={`mt-2 px-6 py-2 rounded-2xl font-medium
                 ${user
                   ? "bg-[#3B5249] text-white hover:bg-[#3a5a40]"
-                  : "bg-gray-400 text-white cursor-not-allowed"}
+                  : "bg-gray-300 text-[#3B5249] cursor-not-allowed"}
               `}
             >
-              Upload File
+              Upload 
             </motion.button>
           </>
         )}

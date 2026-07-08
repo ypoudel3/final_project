@@ -343,7 +343,7 @@ def tps_torso(full_bgr, full_alpha, kp, canvas_shape):
 
         kp["rh"] - [sw * 0.10, -sw * 0.03],
 
-        kp["lh"] + [sw * 0.10, sw * 0.03],
+        kp["lh"] + [sw * 0.10, sw * 0.0002],
 
         neck + [0, sw * 0.60],
 

@@ -152,6 +152,7 @@ const TryOnUI = () => {
     { id: 1, image: "/models/model1.jpg" },
     { id: 2, image: "/models/model2.jpg" },
     { id: 3, image: "/models/model3.jpg" },
+    { id: 4, image: "/models/model4.jpg" },
     
     
   ];
@@ -161,6 +162,8 @@ const TryOnUI = () => {
     { id: 1, image: "/clothes/dress1.jpg", name: "dress1" },
     { id: 2, image: "/clothes/dress2.jpg", name: "dress2" },
     { id: 3, image: "/clothes/dress3.jpg", name: "dress3" },
+    
+    
     
     
   ];

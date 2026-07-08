@@ -152,11 +152,8 @@ const TryOnUI = () => {
     { id: 1, image: "/models/model1.jpg" },
     { id: 2, image: "/models/model2.jpg" },
     { id: 3, image: "/models/model3.jpg" },
-    { id: 4, image: "/models/model4.jpg" },
-    { id: 5, image: "/models/model5.jpg" },
-    { id: 6, image: "/models/model6.jpg" },
-    { id: 7, image: "/models/model7.jpg" },
-    { id: 8, image: "/models/model8.jpg" },
+    
+    
   ];
 
   // Example outfits data matched to a 2-row layout structure
@@ -164,11 +161,8 @@ const TryOnUI = () => {
     { id: 1, image: "/clothes/dress1.jpg", name: "dress1" },
     { id: 2, image: "/clothes/dress2.jpg", name: "dress2" },
     { id: 3, image: "/clothes/dress3.jpg", name: "dress3" },
-    { id: 4, image: "/clothes/dress4.jpg", name: "dress4" },
-    { id: 5, image: "/clothes/dress5.jpg", name: "dress5" },
-    { id: 6, image: "/clothes/dress6.jpg", name: "dress6" },
-    { id: 7, image: "/clothes/dress7.jpg", name: "dress7" },
-    { id: 8, image: "/clothes/dress8.jpg", name: "dress8" },
+    
+    
   ];
 
   const handleUploadClick = () => {

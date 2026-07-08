@@ -1,124 +1,65 @@
 import React from 'react';
-import { Upload, Shirt, Sparkles, ArrowRight } from 'lucide-react';
 
-// Simple Navbar
-const Navbar = () => (
-  <nav className="w-full bg-white/10 backdrop-blur-md px-6 py-4 flex justify-between items-center">
-    <h2 className="text-white font-bold text-xl">My Brand</h2>
-    <ul className="flex gap-6 text-white font-medium">
-      <li>Home</li>
-      <li>About</li>
-      <li>Contact</li>
-    </ul>
-  </nav>
-);
-
-// StepCard Component
-const StepCard = ({ number, title, description, Icon }) => (
-  <div className="group relative flex flex-col items-start p-8 rounded-2xl 
-    bg-white/10 border border-white/20
-    hover:bg-white/20
-    transition-all duration-500">
-
-    {/* Number */}
-    <div className="absolute -top-4 -right-4 w-12 h-12 flex items-center justify-center 
-      rounded-full bg-white text-purple-600 font-bold shadow-lg">
-      {number}
-    </div>
-
-    {/* Icon */}
-    <div className="mb-6 p-4 rounded-xl bg-white/20 text-white 
-      group-hover:scale-110 transition-transform duration-500">
-      <Icon size={28} strokeWidth={1.5} />
-    </div>
-
-    <h3 className="text-xl font-semibold text-white mb-3">{title}</h3>
-    <p className="text-white/90 text-sm leading-relaxed">{description}</p>
-  </div>
-);
-
-const Tutorials = () => {
-  const steps = [
-    {
-      title: "Upload Your Model",
-      description: "Upload a clear image of yourself or a model for best AI fitting results.",
-      Icon: Upload
-    },
-    {
-      title: "Select Your Outfit",
-      description: "Pick outfits from our collection and instantly preview them on your avatar.",
-      Icon: Shirt
-    },
-    {
-      title: "Generate Look",
-      description: "Click generate and view a realistic try-on experience in seconds.",
-      Icon: Sparkles
-    }
-  ];
-
+export default function Tutorials() {
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center pt-6 pb-4">
-
-      {/* Navbar */}
-      <Navbar />
-
-      {/* Gap between Navbar and Body */}
-      <div className="w-full max-w-7xl border-t border-white/40 my-4" />
-
-      {/* Body */}
-      <div className="w-full max-w-7xl 
-        bg-gradient-to-r from-[#7e7d9f] via-[#a8a4d0] to-[#cbb7f0]
-        rounded-2xl 
-        px-6 md:px-16 lg:px-24 py-10 
-        text-white relative">
-
-        {/* Header */}
-        <header className="max-w-3xl mx-auto text-center mb-10 space-y-5
-          bg-white/5 backdrop-blur-sm rounded-lg shadow-md p-6">
-          <h1 className="text-4xl md:text-6xl font-bold">
-            Virtual Try-On Guide
+    /* Outer layout matching the main page canvas */
+    <div className="min-h-screen bg-[#f8f9fa] text-slate-800 font-sans antialiased pt-24 pb-6 px-4">
+      
+      {/* Updated Main Section Container with a lightened, clean cream color balance */}
+      <div className="max-w-7xl mx-auto bg-[#fdfdfb] rounded-2xl border border-slate-200/70 shadow-sm overflow-hidden p-8 md:p-16 min-h-[calc(100vh-8.5rem)] flex flex-col items-center justify-center">
+        
+        {/* Simple, Elegant Main Header */}
+        <div className="text-center max-w-2xl mb-16 space-y-4">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900">
+            How to Use Virtual Try On
           </h1>
-          <p className="text-white/90 text-lg">
-            Experience fashion in <span className="font-semibold">three simple steps</span>.
+          <p className="text-base font-medium text-slate-600/90 leading-relaxed px-4">
+            Learn how to use Virtual Try On in three simple steps: upload your photo, select your outfit, and press generate to see instant results.
           </p>
-        </header>
-
-        {/* Steps */}
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-10">
-
-          {/* Arrows */}
-          <div className="hidden md:block absolute top-1/2 left-[32%] -translate-y-1/2 text-white/40">
-            <ArrowRight size={32} />
-          </div>
-          <div className="hidden md:block absolute top-1/2 left-[66%] -translate-y-1/2 text-white/40">
-            <ArrowRight size={32} />
-          </div>
-
-          {steps.map((step, index) => (
-            <StepCard 
-              key={step.title}
-              number={index + 1}
-              title={step.title}
-              description={step.description}
-              Icon={step.Icon}
-            />
-          ))}
         </div>
 
-        {/* Footer (tight gap) */}
-        <footer className="mt-1 text-center">
-          <button className="px-12 py-4 rounded-full 
-            bg-gradient-to-r from-[#a8a4d0] via-[#cbb7f0] to-[#d8b4f5]
-            text-white font-semibold 
-            hover:scale-105 hover:shadow-lg hover:shadow-purple-300/50
-            transition-all duration-300">
-            Start Your Fitting
-          </button>
-        </footer>
+        {/* Horizontal Format Layout Sequence */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative max-w-5xl">
+          
+          {/* Step 1 Card */}
+          <div className="group bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300 flex flex-col justify-between transform hover:-translate-y-1">
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold text-slate-900 tracking-wide text-center pb-2 border-b border-slate-100 group-hover:text-purple-600 transition-colors duration-200">
+                Step 1: Upload Your Model
+              </h2>
+              <p className="text-sm font-medium text-slate-700/90 leading-relaxed">
+                Begin by uploading a clear photo of your model or yourself . This image will serve as the base for your virtual Try On experience, ensuring a personalized and accurate fitting. Whether it's a full-body shot or a close-up, make sure the photo is clear to get the best results with our AI-powered system.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 2 Card */}
+          <div className="group bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300 flex flex-col justify-between transform hover:-translate-y-1">
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold text-slate-900 tracking-wide text-center pb-2 border-b border-slate-100 group-hover:text-purple-600 transition-colors duration-200">
+                Step 2: Select Your Outfit
+              </h2>
+              <p className="text-sm font-medium text-slate-700/90 leading-relaxed">
+                Browse through a wide range of outfits available on virtual system. Whether you're looking for casual, formal, or trendy styles, you can easily choose the perfect outfit to visualize. Our AI virtual Try On technology makes it simple to select and pair outfits with your model or avatar in just a few clicks.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 3 Card */}
+          <div className="group bg-white border border-slate-200 rounded-2xl p-7 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300 flex flex-col justify-between transform hover:-translate-y-1">
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold text-slate-900 tracking-wide text-center pb-2 border-b border-slate-100 group-hover:text-purple-600 transition-colors duration-200">
+                Step 3: Press Generate
+              </h2>
+              <p className="text-sm font-medium text-slate-700/90 leading-relaxed">
+                Once you've selected your desired outfit, simply press the "Generate" button. Ours Virtual's advanced AI virtual Try On technology will create a realistic image or video of how the outfit looks on your model or yourself. Enjoy the instant results, allowing you to see your fashion choices come to life with just a few clicks.
+              </p>
+            </div>
+          </div>
+
+        </div>
 
       </div>
     </div>
   );
-};
-
-export default Tutorials;
+}

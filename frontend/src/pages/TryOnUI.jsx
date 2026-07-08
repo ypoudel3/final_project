@@ -67,27 +67,6 @@ const faqs = [
 // public/clothes/
 // ==========================
 
-const clothes = [
-  {
-    id: 1,
-    image: "/clothes/dress1.jpg",
-  },
-
-  {
-    id: 2,
-    image: "/clothes/dress2.jpg",
-  },
-
-  {
-    id: 3,
-    image: "/clothes/dress3.jpg",
-  },
-
-  {
-    id: 4,
-    image: "/clothes/dress4.jpg",
-  },
-];
 
 // ==========================
 // FAQ COMPONENT
@@ -153,114 +132,100 @@ const FAQ = () => {
 // MAIN COMPONENT
 // ==========================
 
+// ==========================
+// MAIN COMPONENT
+// ==========================
+
 const TryOnUI = () => {
-  const { user, setIsAuthModalOpen } =
-    useContext(AuthContext);
+  const { user, setIsAuthModalOpen } = useContext(AuthContext);
 
   const [personImage, setPersonImage] = useState(null);
-
-  const [personPreview, setPersonPreview] =
-    useState(null);
-
-  const [selectedCloth, setSelectedCloth] =
-    useState(null);
-
+  const [personPreview, setPersonPreview] = useState(null);
+  const [selectedCloth, setSelectedCloth] = useState(null);
   const [result, setResult] = useState(null);
-
   const [loading, setLoading] = useState(false);
 
   const fileInputRef = useRef(null);
 
-  // ==========================
-  // OPEN FILE INPUT
-  // ==========================
+  // Example models data based on your target layout row structure
+  const modelExamples = [
+    { id: 1, image: "/models/model1.jpg" },
+    { id: 2, image: "/models/model2.jpg" },
+    { id: 3, image: "/models/model3.jpg" },
+    { id: 4, image: "/models/model4.jpg" },
+    
+    
+  ];
+
+  // Example outfits data matched to a 2-row layout structure
+  const clothesExamples = [
+    { id: 1, image: "/clothes/dress1.jpg", name: "dress1" },
+    { id: 2, image: "/clothes/dress2.jpg", name: "dress2" },
+    { id: 3, image: "/clothes/dress3.jpg", name: "dress3" },
+    
+    
+    
+    
+  ];
 
   const handleUploadClick = () => {
     if (!user) {
       setIsAuthModalOpen(true);
       return;
     }
-
     fileInputRef.current?.click();
   };
 
-  // ==========================
-  // HANDLE IMAGE
-  // ==========================
-
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
-
     if (file) {
       setPersonImage(file);
-
-      setPersonPreview(
-        URL.createObjectURL(file)
-      );
+      setPersonPreview(URL.createObjectURL(file));
     }
   };
-
-  // ==========================
-  // GENERATE TRY ON
-  // ==========================
 
   const runTryOn = async () => {
-    if (!user) {
-      setIsAuthModalOpen(true);
-      return;
+  if (!user) {
+    setIsAuthModalOpen(true);
+    return;
+  }
+
+  if (!personImage || !selectedCloth) {
+    alert("Please upload your image and select a dress.");
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const formData = new FormData();
+
+    // --- FIX FOR PERSON IMAGE ---
+    if (typeof personImage === "string") {
+      // If it's a string path (example model), fetch it and convert to a blob file
+      const personBlob = await fetch(personImage).then((r) => r.blob());
+      formData.append("person", personBlob, "model_example.jpg");
+    } else {
+      // If it's a file uploaded by the user, append it directly
+      formData.append("person", personImage);
     }
 
-    if (!personImage || !selectedCloth) {
-      alert(
-        "Please upload your image and select a dress."
-      );
+    // --- CLOTH IMAGE ---
+    const clothBlob = await fetch(selectedCloth.image).then((r) => r.blob());
+    formData.append("cloth", clothBlob, selectedCloth.name + ".jpg");
 
-      return;
-    }
+    const response = await axios.post("http://127.0.0.1:5000/tryon", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
 
-    setLoading(true);
-
-    try {
-      const formData = new FormData();
-
-      // PERSON IMAGE
-      formData.append(
-        "person",
-        personImage
-      );
-
-      // CLOTH IMAGE
-      const clothBlob = await fetch(
-        selectedCloth.image
-      ).then((r) => r.blob());
-
-      formData.append(
-        "cloth",
-        clothBlob,
-        selectedCloth.name + ".jpg"
-      );
-
-      // API CALL
-      const response = await axios.post(
-        "http://127.0.0.1:5000/tryon",
-        formData,
-        {
-          headers: {
-            "Content-Type":
-              "multipart/form-data",
-          },
-        }
-      );
-
-      setResult(response.data.image);
-    } catch (error) {
-      console.error(error);
-
-      alert("Try-on failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setResult(response.data.image);
+  } catch (error) {
+    console.error(error);
+    alert("Try-on failed.");
+  } finally {
+    setLoading(false);
+  }
+};
+  
 
   return (
     <>
@@ -271,202 +236,156 @@ const TryOnUI = () => {
           animate="show"
           className="max-w-7xl mx-auto"
         >
-          {/* ========================= */}
           {/* TITLE */}
-          {/* ========================= */}
-
-          <motion.div
-            variants={itemVariants}
-            className="text-center mb-14"
-          >
+          <motion.div variants={itemVariants} className="text-center mb-14">
             <h1 className="text-4xl font-bold text-[#3B5249]">
-               Virtual Try-On Studio
+              Virtual Try-On Studio
             </h1>
-
             <p className="text-gray-600 mt-4">
-              Upload your image and try
-              clothes instantly.
+              Upload your image and try clothes instantly.
             </p>
           </motion.div>
 
-          {/* ========================= */}
           {/* MAIN GRID */}
-          {/* ========================= */}
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {/* ========================= */}
-            {/* UPLOAD SECTION */}
-            {/* ========================= */}
-
+            
+            {/* STEP 1: UPLOAD MODEL */}
             <motion.div
               variants={itemVariants}
-              className="bg-white rounded-3xl p-8 shadow-lg"
+              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col justify-between"
             >
-              <h2 className="text-2xl font-semibold text-[#3B5249] mb-6">
-                Upload Your Image
-              </h2>
+              <div>
+                <h2 className="text-xl font-semibold text-[#3B5249] mb-4 text-center">
+                  Step 1: Upload Your Model
+                </h2>
 
-              {/* HIDDEN INPUT */}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
 
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileChange}
-              />
-
-              {/* UPLOAD BOX */}
-
-              <motion.div
-                whileHover={
-                  user
-                    ? {
-                        scale: 1.02,
-                      }
-                    : {}
-                }
-                onClick={handleUploadClick}
-                className={`border-2 border-dashed rounded-3xl h-170 flex flex-col items-center justify-center overflow-hidden relative transition
-                  
-                  ${
-                    user
-                      ? "cursor-pointer border-[#3B5249]"
-                      : "cursor-not-allowed opacity-80 border-gray-400"
-                  }
-                `}
-              >
-                {personPreview ? (
-                  <img
-                    src={personPreview}
-                    alt="preview"
-                    className="w-full h-full object-cover absolute inset-0"
-                  />
-                ) : (
-                  <>
-                    <ImagePlus
-                      size={55}
-                      className="text-[#3B5249]"
-                    />
-
-                    <p className="mt-5 text-center text-[#3B5249] font-medium">
-                      {user
-                        ? "Click to upload your image"
-                        : "Login to upload image"}
-                    </p>
-
-                    <motion.button
-                      whileHover={
-                        user
-                          ? {
-                              scale: 1.05,
-                            }
-                          : {}
-                      }
-                      whileTap={
-                        user
-                          ? {
-                              scale: 0.95,
-                            }
-                          : {}
-                      }
-                      className={`mt-5 px-8 py-3 rounded-2xl font-medium transition
-                        
-                        ${
-                          user
-                            ? "bg-[#3B5249] text-white hover:bg-[#2f433b]"
-                            : "bg-gray-300 text-gray-500"
-                        }
-                      `}
-                    >
-                      Upload
-                    </motion.button>
-                  </>
-                )}
-              </motion.div>
-
-              {/* REMOVE */}
-
-              {personImage && (
-                <button
-                  onClick={() => {
-                    setPersonImage(null);
-                    setPersonPreview(null);
-                    setResult(null);
-                  }}
-                  className="mt-4 p-3 rounded-2xl font-medium transition bg-[#588157] text-white hover:bg-[#2f433b]"
+                {/* DISPLAY WINDOW */}
+                <motion.div
+                  whileHover={user ? { scale: 1.01 } : {}}
+                  onClick={handleUploadClick}
+                  className={`border-2 border-dashed rounded-3xl h-96 flex flex-col items-center justify-center overflow-hidden relative transition bg-gray-50 ${
+                    user ? "cursor-pointer border-[#3B5249]" : "cursor-not-allowed opacity-80 border-gray-400"
+                  }`}
                 >
-                  Remove Image
-                </button>
-              )}
-            </motion.div>
-
-            {/* ========================= */}
-            {/* CLOTHES SECTION */}
-            {/* ========================= */}
-
-            <motion.div
-              variants={itemVariants}
-              className="bg-white rounded-3xl p-8 shadow-lg"
-            >
-              <h2 className="text-2xl font-semibold text-[#3B5249] mb-6">
-                Select Your Outfit
-              </h2>
-
-              <div className="grid grid-cols-2 gap-5">
-                {clothes.map((cloth) => (
-                  <motion.div
-                    key={cloth.id}
-                    whileHover={{
-                      scale: 1.04,
-                    }}
-                    whileTap={{
-                      scale: 0.97,
-                    }}
-                    onClick={() =>
-                      setSelectedCloth(cloth)
-                    }
-                    className={`rounded-2xl overflow-hidden border-4 cursor-pointer transition
-                      
-                      ${
-                        selectedCloth?.id ===
-                        cloth.id
-                          ? "border-[#3B5249]"
-                          : "border-transparent"
-                      }
-                    `}
-                  >
+                  {personPreview ? (
                     <img
-                      src={cloth.image}
-                      alt={cloth.name}
-                      className="w-full h-64 object-cover"
+                      src={personPreview}
+                      alt="preview"
+                      className="w-full h-full object-contain absolute inset-0"
                     />
+                  ) : (
+                    <div className="flex flex-col items-center p-4 text-center">
+                      <ImagePlus size={45} className="text-[#3B5249]" />
+                      <p className="mt-3 text-[#3B5249] font-medium text-sm">
+                        {user ? "Click to upload your image" : "Login to upload image"}
+                      </p>
+                    </div>
+                  )}
+                </motion.div>
+              </div>
 
-                    
-                  </motion.div>
-                ))}
+              {/* TWO-ROW MODEL THUMBNAIL BOX */}
+              <div className="mt-6">
+                <p className="text-sm font-medium text-gray-500 mb-2">Examples</p>
+                <div className="grid grid-cols-4 gap-3">
+                  {modelExamples.map((ex) => (
+                    <div
+                      key={ex.id}
+                      onClick={() => {
+                        setPersonPreview(ex.image);
+                        setPersonImage(ex.image);
+                      }}
+                      className="h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-[#3B5249] active:scale-95 cursor-pointer transition shadow-sm"
+                    >
+                      <img src={ex.image} alt="Example Model" className="w-full h-full object-cover" />
+                    </div>
+                  ))}
+                </div>
+                {personImage && (
+                  <button
+                    onClick={() => {
+                      setPersonImage(null);
+                      setPersonPreview(null);
+                      setResult(null);
+                    }}
+                    className="mt-3 text-xs font-semibold text-red-600 hover:underline"
+                  >
+                    Remove Image
+                  </button>
+                )}
               </div>
             </motion.div>
+
+            {/* STEP 2: SELECT OUTFIT */}
+            <motion.div
+              variants={itemVariants}
+              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col justify-between"
+            >
+              <div>
+                <h2 className="text-xl font-semibold text-[#3B5249] mb-4 text-center">
+                  Step 2: Select Your Outfit
+                </h2>
+
+                {/* DISPLAY WINDOW */}
+                <div className="border-2 border-dashed border-gray-200 rounded-3xl h-96 flex flex-col items-center justify-center overflow-hidden relative bg-gray-50">
+                  {selectedCloth ? (
+                    <img
+                      src={selectedCloth.image}
+                      alt="Selected outfit"
+                      className="w-full h-full object-contain"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center p-4 text-center">
+                      <ImagePlus size={45} className="text-gray-400" />
+                      <p className="mt-3 text-gray-400 text-sm font-medium">
+                        Select an outfit below
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* TWO-ROW CLOTHING THUMBNAIL BOX */}
+              <div className="mt-6">
+                <p className="text-sm font-medium text-gray-500 mb-2">Examples</p>
+                <div className="grid grid-cols-4 gap-3">
+                  {clothesExamples.map((cloth) => (
+                    <div
+                      key={cloth.id}
+                      onClick={() => setSelectedCloth(cloth)}
+                      className={`h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition active:scale-95 shadow-sm ${
+                        selectedCloth?.id === cloth.id ? "border-[#3B5249]" : "border-transparent hover:border-gray-300"
+                      }`}
+                    >
+                      <img
+                        src={cloth.image}
+                        alt="Clothing snippet"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
           </div>
 
-          {/* ========================= */}
           {/* GENERATE BUTTON */}
-          {/* ========================= */}
-
-          <motion.div
-            variants={itemVariants}
-            className="flex justify-center mt-12"
-          >
+          <motion.div variants={itemVariants} className="flex justify-center mt-12">
             <motion.button
-              whileHover={{
-                scale: 1.06,
-              }}
-              whileTap={{
-                scale: 0.95,
-              }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               onClick={runTryOn}
               disabled={loading}
-              className="bg-[#3B5249] text-white px-12 py-4 rounded-2xl text-lg font-medium shadow-lg hover:bg-[#2f433b] transition flex items-center gap-3"
+              className="bg-[#3B5249] text-white px-16 py-4 rounded-2xl text-lg font-medium shadow-lg hover:bg-[#2f433b] transition flex items-center gap-3"
             >
               {loading ? (
                 <>
@@ -479,29 +398,17 @@ const TryOnUI = () => {
             </motion.button>
           </motion.div>
 
-          {/* ========================= */}
           {/* RESULT */}
-          {/* ========================= */}
-
           {result && (
             <motion.div
-              initial={{
-                opacity: 0,
-                y: 40,
-              }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.6,
-              }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
               className="mt-20 bg-white p-8 rounded-3xl shadow-xl"
             >
               <h2 className="text-3xl font-bold text-center text-[#3B5249] mb-8">
                 Generated Result
               </h2>
-
               <img
                 src={result}
                 alt="Result"

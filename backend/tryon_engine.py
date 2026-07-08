@@ -354,8 +354,8 @@ def tps_torso(full_bgr, full_alpha, kp, canvas_shape):
     # crop. This makes the sleeve fabric itself bend at the elbow to
     # match arm_corridor_mask's bend, fixing the elbow kink/notch.
     src_pts = np.concatenate([src_pts, np.array([
-        sp(0.04, 0.46),   # right elbow (garment space)
-        sp(0.96, 0.46),   # left elbow (garment space)
+        sp(0.096, 0.56),   # right elbow (garment space)
+        sp(0.96, 0.56),   # left elbow (garment space)
     ], dtype=np.float32)])
 
     dst_pts = np.concatenate([dst_pts, np.array([

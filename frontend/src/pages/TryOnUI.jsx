@@ -182,36 +182,47 @@ const TryOnUI = () => {
   };
 
   const runTryOn = async () => {
-    if (!user) {
-      setIsAuthModalOpen(true);
-      return;
-    }
+  if (!user) {
+    setIsAuthModalOpen(true);
+    return;
+  }
 
-    if (!personImage || !selectedCloth) {
-      alert("Please upload your image and select a dress.");
-      return;
-    }
+  if (!personImage || !selectedCloth) {
+    alert("Please upload your image and select a dress.");
+    return;
+  }
 
-    setLoading(true);
-    try {
-      const formData = new FormData();
+  setLoading(true);
+  try {
+    const formData = new FormData();
+
+    // --- FIX FOR PERSON IMAGE ---
+    if (typeof personImage === "string") {
+      // If it's a string path (example model), fetch it and convert to a blob file
+      const personBlob = await fetch(personImage).then((r) => r.blob());
+      formData.append("person", personBlob, "model_example.jpg");
+    } else {
+      // If it's a file uploaded by the user, append it directly
       formData.append("person", personImage);
-
-      const clothBlob = await fetch(selectedCloth.image).then((r) => r.blob());
-      formData.append("cloth", clothBlob, selectedCloth.name + ".jpg");
-
-      const response = await axios.post("http://127.0.0.1:5000/tryon", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      setResult(response.data.image);
-    } catch (error) {
-      console.error(error);
-      alert("Try-on failed.");
-    } finally {
-      setLoading(false);
     }
-  };
+
+    // --- CLOTH IMAGE ---
+    const clothBlob = await fetch(selectedCloth.image).then((r) => r.blob());
+    formData.append("cloth", clothBlob, selectedCloth.name + ".jpg");
+
+    const response = await axios.post("http://127.0.0.1:5000/tryon", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    setResult(response.data.image);
+  } catch (error) {
+    console.error(error);
+    alert("Try-on failed.");
+  } finally {
+    setLoading(false);
+  }
+};
+  
 
   return (
     <>
@@ -265,7 +276,7 @@ const TryOnUI = () => {
                     <img
                       src={personPreview}
                       alt="preview"
-                      className="w-full h-full object-cover absolute inset-0"
+                      className="w-full h-full object-contain absolute inset-0"
                     />
                   ) : (
                     <div className="flex flex-col items-center p-4 text-center">
@@ -354,7 +365,7 @@ const TryOnUI = () => {
                       <img
                         src={cloth.image}
                         alt="Clothing snippet"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
                     </div>
                   ))}

@@ -316,7 +316,7 @@ const TryOnUI = () => {
                       setPersonPreview(null);
                       setResult(null);
                     }}
-                    className="mt-3 text-xs font-semibold text-red-600 hover:underline"
+                    className="mt-5 text-xs font-semibold bg-[#588157] text-white py-3 px-5 rounded-2xl hover:scale-105"
                   >
                     Remove Image
                   </button>

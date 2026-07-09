@@ -335,11 +335,11 @@ def tps_torso(full_bgr, full_alpha, kp, canvas_shape):
 
     dst_pts = np.array([
 
-        neck - [0, sw * 0.12],
+        neck - [0, sw * 0.18],
 
-        kp["rs"] - [sw * 0.06, -sw * 0.003],
+        kp["rs"] - [sw * 0.06, -sw * 0.005],
 
-        kp["ls"] + [sw * 0.06, sw * 0.003],
+        kp["ls"] + [sw * 0.06, sw * 0.005],
 
         kp["rh"] - [sw * 0.10, -sw * 0.03],
 

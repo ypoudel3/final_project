@@ -136,6 +136,8 @@ const FAQ = () => {
 // MAIN COMPONENT
 // ==========================
 
+
+
 const TryOnUI = () => {
   const { user, setIsAuthModalOpen } = useContext(AuthContext);
 
@@ -153,8 +155,6 @@ const TryOnUI = () => {
     { id: 2, image: "/models/model2.jpg" },
     { id: 3, image: "/models/model3.jpg" },
     { id: 4, image: "/models/model4.jpg" },
-    
-    
   ];
 
   // Example outfits data matched to a 2-row layout structure
@@ -162,10 +162,6 @@ const TryOnUI = () => {
     { id: 1, image: "/clothes/dress1.jpg", name: "dress1" },
     { id: 2, image: "/clothes/dress2.jpg", name: "dress2" },
     { id: 3, image: "/clothes/dress3.jpg", name: "dress3" },
-    
-    
-    
-    
   ];
 
   const handleUploadClick = () => {
@@ -185,47 +181,44 @@ const TryOnUI = () => {
   };
 
   const runTryOn = async () => {
-  if (!user) {
-    setIsAuthModalOpen(true);
-    return;
-  }
-
-  if (!personImage || !selectedCloth) {
-    alert("Please upload your image and select a dress.");
-    return;
-  }
-
-  setLoading(true);
-  try {
-    const formData = new FormData();
-
-    // --- FIX FOR PERSON IMAGE ---
-    if (typeof personImage === "string") {
-      // If it's a string path (example model), fetch it and convert to a blob file
-      const personBlob = await fetch(personImage).then((r) => r.blob());
-      formData.append("person", personBlob, "model_example.jpg");
-    } else {
-      // If it's a file uploaded by the user, append it directly
-      formData.append("person", personImage);
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
     }
 
-    // --- CLOTH IMAGE ---
-    const clothBlob = await fetch(selectedCloth.image).then((r) => r.blob());
-    formData.append("cloth", clothBlob, selectedCloth.name + ".jpg");
+    if (!personImage || !selectedCloth) {
+      alert("Please upload your image and select a dress.");
+      return;
+    }
 
-    const response = await axios.post("http://127.0.0.1:5000/tryon", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    setLoading(true);
+    try {
+      const formData = new FormData();
 
-    setResult(response.data.image);
-  } catch (error) {
-    console.error(error);
-    alert("Try-on failed.");
-  } finally {
-    setLoading(false);
-  }
-};
-  
+      // --- FIX FOR PERSON IMAGE ---
+      if (typeof personImage === "string") {
+        const personBlob = await fetch(personImage).then((r) => r.blob());
+        formData.append("person", personBlob, "model_example.jpg");
+      } else {
+        formData.append("person", personImage);
+      }
+
+      // --- CLOTH IMAGE ---
+      const clothBlob = await fetch(selectedCloth.image).then((r) => r.blob());
+      formData.append("cloth", clothBlob, selectedCloth.name + ".jpg");
+
+      const response = await axios.post("http://127.0.0.1:5000/tryon", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      setResult(response.data.image);
+    } catch (error) {
+      console.error(error);
+      alert("Try-on failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -247,12 +240,12 @@ const TryOnUI = () => {
           </motion.div>
 
           {/* MAIN GRID */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             
             {/* STEP 1: UPLOAD MODEL */}
             <motion.div
               variants={itemVariants}
-              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col justify-between"
+              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col gap-6"
             >
               <div>
                 <h2 className="text-xl font-semibold text-[#3B5249] mb-4 text-center">
@@ -293,7 +286,7 @@ const TryOnUI = () => {
               </div>
 
               {/* TWO-ROW MODEL THUMBNAIL BOX */}
-              <div className="mt-6">
+              <div>
                 <p className="text-sm font-medium text-gray-500 mb-2">Examples</p>
                 <div className="grid grid-cols-4 gap-3">
                   {modelExamples.map((ex) => (
@@ -303,7 +296,9 @@ const TryOnUI = () => {
                         setPersonPreview(ex.image);
                         setPersonImage(ex.image);
                       }}
-                      className="h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-[#3B5249] active:scale-95 cursor-pointer transition shadow-sm"
+                      className={`h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition active:scale-95 shadow-sm ${
+                        personImage === ex.image ? "border-[#3B5249]" : "border-transparent hover:border-gray-300"
+                      }`}
                     >
                       <img src={ex.image} alt="Example Model" className="w-full h-full object-cover" />
                     </div>
@@ -316,7 +311,10 @@ const TryOnUI = () => {
                       setPersonPreview(null);
                       setResult(null);
                     }}
+
                     className="mt-5 text-xs font-semibold bg-[#588157] text-white py-3 px-5 rounded-2xl hover:scale-105"
+
+                    className="mt-3 text-sm font-semibold text-red-600 hover:underline block"
                   >
                     Remove Image
                   </button>
@@ -327,7 +325,7 @@ const TryOnUI = () => {
             {/* STEP 2: SELECT OUTFIT */}
             <motion.div
               variants={itemVariants}
-              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col justify-between"
+              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col gap-6"
             >
               <div>
                 <h2 className="text-xl font-semibold text-[#3B5249] mb-4 text-center">
@@ -340,7 +338,7 @@ const TryOnUI = () => {
                     <img
                       src={selectedCloth.image}
                       alt="Selected outfit"
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain p-4 absolute inset-0"
                     />
                   ) : (
                     <div className="flex flex-col items-center p-4 text-center">
@@ -354,7 +352,7 @@ const TryOnUI = () => {
               </div>
 
               {/* TWO-ROW CLOTHING THUMBNAIL BOX */}
-              <div className="mt-6">
+              <div>
                 <p className="text-sm font-medium text-gray-500 mb-2">Examples</p>
                 <div className="grid grid-cols-4 gap-3">
                   {clothesExamples.map((cloth) => (
@@ -368,7 +366,7 @@ const TryOnUI = () => {
                       <img
                         src={cloth.image}
                         alt="Clothing snippet"
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   ))}
@@ -419,11 +417,12 @@ const TryOnUI = () => {
         </motion.div>
       </div>
 
-      {/* FAQ */}
       <FAQ />
     </>
   );
 };
 
 export default TryOnUI;
+
+
 

@@ -1,5 +1,4 @@
-
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { ImagePlus, ChevronDown, Loader2 } from "lucide-react";
@@ -157,12 +156,27 @@ const TryOnUI = () => {
     { id: 4, image: "/models/model4.jpg" },
   ];
 
-  // Example outfits data matched to a 2-row layout structure
-  const clothesExamples = [
-    { id: 1, image: "/clothes/dress1.jpg", name: "dress1" },
-    { id: 2, image: "/clothes/dress2.jpg", name: "dress2" },
-    { id: 3, image: "/clothes/dress3.jpg", name: "dress3" },
-  ];
+  // Outfits are now pulled live from every seller's listings and grouped
+  // by shop name, e.g. { "Zara": [...], "H&M": [...] }
+  const [shopListings, setShopListings] = useState({});
+  const [listingsLoading, setListingsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        // NOTE: adjust this path to match wherever seller_bp is registered
+        // in your Flask app (e.g. app.register_blueprint(seller_bp, url_prefix="/seller"))
+        const res = await axios.get("http://127.0.0.1:5000/seller/public/listings");
+        setShopListings(res.data.shops || {});
+      } catch (error) {
+        console.error("Failed to load outfits:", error);
+      } finally {
+        setListingsLoading(false);
+      }
+    };
+
+    fetchListings();
+  }, []);
 
   const handleUploadClick = () => {
     if (!user) {
@@ -204,8 +218,8 @@ const TryOnUI = () => {
       }
 
       // --- CLOTH IMAGE ---
-      const clothBlob = await fetch(selectedCloth.image).then((r) => r.blob());
-      formData.append("cloth", clothBlob, selectedCloth.name + ".jpg");
+      const clothBlob = await fetch(selectedCloth.image_url).then((r) => r.blob());
+      formData.append("cloth", clothBlob, (selectedCloth.name || "cloth") + ".jpg");
 
       const response = await axios.post("http://127.0.0.1:5000/tryon", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -245,7 +259,7 @@ const TryOnUI = () => {
             {/* STEP 1: UPLOAD MODEL */}
             <motion.div
               variants={itemVariants}
-              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col gap-6"
+              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col gap-6 max-h-150 overflow-y-auto"
             >
               <div>
                 <h2 className="text-xl font-semibold text-[#3B5249] mb-4 text-center">
@@ -312,8 +326,6 @@ const TryOnUI = () => {
                       setResult(null);
                     }}
 
-                    className="mt-5 text-xs font-semibold bg-[#588157] text-white py-3 px-5 rounded-2xl hover:scale-105"
-
                     className="mt-3 text-sm font-semibold text-red-600 hover:underline block"
                   >
                     Remove Image
@@ -325,7 +337,7 @@ const TryOnUI = () => {
             {/* STEP 2: SELECT OUTFIT */}
             <motion.div
               variants={itemVariants}
-              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col gap-6"
+              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col gap-6 max-h-150 overflow-y-auto"
             >
               <div>
                 <h2 className="text-xl font-semibold text-[#3B5249] mb-4 text-center">
@@ -336,7 +348,7 @@ const TryOnUI = () => {
                 <div className="border-2 border-dashed border-gray-200 rounded-3xl h-86 flex flex-col items-center justify-center overflow-hidden relative bg-gray-50">
                   {selectedCloth ? (
                     <img
-                      src={selectedCloth.image}
+                      src={selectedCloth.image_url}
                       alt="Selected outfit"
                       className="w-full h-full object-contain p-4 absolute inset-0"
                     />
@@ -351,26 +363,51 @@ const TryOnUI = () => {
                 </div>
               </div>
 
-              {/* TWO-ROW CLOTHING THUMBNAIL BOX */}
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-2">Examples</p>
-                <div className="grid grid-cols-4 gap-3">
-                  {clothesExamples.map((cloth) => (
-                    <div
-                      key={cloth.id}
-                      onClick={() => setSelectedCloth(cloth)}
-                      className={`h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition active:scale-95 shadow-sm ${
-                        selectedCloth?.id === cloth.id ? "border-[#3B5249]" : "border-transparent hover:border-gray-300"
-                      }`}
-                    >
-                      <img
-                        src={cloth.image}
-                        alt="Clothing snippet"
-                        className="w-full h-full object-cover"
-                      />
+              {/* OUTFITS GROUPED BY SHOP */}
+              <div className="max-h-96 overflow-y-auto pr-1">
+                {listingsLoading ? (
+                  <p className="text-sm text-gray-400 text-center py-6">
+                    Loading outfits...
+                  </p>
+                ) : Object.keys(shopListings).length === 0 ? (
+                  <p className="text-sm text-gray-400 text-center py-6">
+                    No outfits available yet.
+                  </p>
+                ) : (
+                  Object.entries(shopListings).map(([shopName, items]) => (
+                    <div key={shopName} className="mb-6 last:mb-0">
+                      <p className="text-sm font-semibold text-[#3B5249] mb-2">
+                        {shopName}
+                      </p>
+                      <div className="grid grid-cols-4 gap-3">
+                        {items.map((cloth) => {
+                          const clothId = cloth._id?.$oid || cloth._id;
+                          const isSelected =
+                            (selectedCloth?._id?.$oid || selectedCloth?._id) === clothId;
+
+                          return (
+                            <div
+                              key={clothId}
+                              onClick={() => setSelectedCloth(cloth)}
+                              title={cloth.name}
+                              className={`h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition active:scale-95 shadow-sm ${
+                                isSelected
+                                  ? "border-[#3B5249]"
+                                  : "border-transparent hover:border-gray-300"
+                              }`}
+                            >
+                              <img
+                                src={cloth.image_url}
+                                alt={cloth.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  ))}
-                </div>
+                  ))
+                )}
               </div>
             </motion.div>
 
@@ -423,6 +460,3 @@ const TryOnUI = () => {
 };
 
 export default TryOnUI;
-
-
-

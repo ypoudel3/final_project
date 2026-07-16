@@ -68,11 +68,16 @@ def handle_listings():
         # We assume your Flask runs on port 5000
         image_url = f"http://127.0.0.1:5000/static/uploads/{filename}"
 
+        # Denormalize the shop name onto the listing itself so the public
+        # try-on page can group items by shop without an extra lookup/join.
+        shop_name = g.seller_business_name or seller_email
+
         new_item = {
             "name": name,
             "price": price,
             "seller_email": seller_email,   # tied to the logged-in seller
             "seller_id": g.seller_id,
+            "shop_name": shop_name,
             "image_url": image_url,
             "category": category
         }
@@ -89,3 +94,29 @@ def handle_listings():
 @seller_required
 def get_messages():
     return jsonify({"messages": "No new messages"})
+
+
+@seller_bp.route('/public/listings', methods=['GET'])
+def get_public_listings():
+    """
+    PUBLIC endpoint - intentionally NOT behind @seller_required.
+    This is what the customer-facing Try-On page calls to populate
+    "Step 2: Select Your Outfit" with real items from every seller,
+    grouped under a heading for each seller's shop name.
+
+    Response shape:
+    {
+        "shops": {
+            "Zara": [ {..listing..}, {..listing..} ],
+            "H&M":  [ {..listing..} ]
+        }
+    }
+    """
+    all_listings = list(listings_collection.find({}))
+
+    grouped = {}
+    for item in all_listings:
+        shop = item.get("shop_name") or "Unknown Shop"
+        grouped.setdefault(shop, []).append(item)
+
+    return json.loads(json_util.dumps({"shops": grouped}))

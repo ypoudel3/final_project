@@ -264,7 +264,7 @@ const TryOnUI = () => {
                 <motion.div
                   whileHover={user ? { scale: 1.01 } : {}}
                   onClick={handleUploadClick}
-                  className={`border-2 border-dashed rounded-3xl h-96 flex flex-col items-center justify-center overflow-hidden relative transition bg-gray-50 ${
+                  className={`border-2 border-dashed rounded-3xl h-86 flex flex-col items-center justify-center overflow-hidden relative transition bg-gray-50 ${
                     user ? "cursor-pointer border-[#3B5249]" : "cursor-not-allowed opacity-80 border-gray-400"
                   }`}
                 >
@@ -333,7 +333,7 @@ const TryOnUI = () => {
                 </h2>
 
                 {/* DISPLAY WINDOW */}
-                <div className="border-2 border-dashed border-gray-200 rounded-3xl h-96 flex flex-col items-center justify-center overflow-hidden relative bg-gray-50">
+                <div className="border-2 border-dashed border-gray-200 rounded-3xl h-86 flex flex-col items-center justify-center overflow-hidden relative bg-gray-50">
                   {selectedCloth ? (
                     <img
                       src={selectedCloth.image}
@@ -410,7 +410,7 @@ const TryOnUI = () => {
               <img
                 src={result}
                 alt="Result"
-                className="rounded-3xl mx-auto max-h-[800px] object-contain"
+                className="rounded-3xl mx-auto max-h-175 object-contain"
               />
             </motion.div>
           )}

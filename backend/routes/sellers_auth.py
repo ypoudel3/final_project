@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
 from extensions import bcrypt
 # Note: You'll need to create these functions in your seller_model.py
-from models.seller_model import create_seller, find_seller_by_email 
+from models.seller_model import create_seller, find_seller_by_email
+from utils.auth_utils import generate_token
 
 seller_auth_bp = Blueprint("seller_auth", __name__)
 
@@ -42,9 +43,23 @@ def signup():
         "phone": phone
     }
 
-    create_seller(seller)
+    result = create_seller(seller)
 
-    return jsonify({"message": "Seller registered successfully"}), 201
+    token = generate_token({
+        "_id": result.inserted_id,
+        "email": email,
+        "businessName": business_name,
+    })
+
+    return jsonify({
+        "message": "Seller registered successfully",
+        "token": token,
+        "seller": {
+            "id": str(result.inserted_id),
+            "businessName": business_name,
+            "email": email,
+        },
+    }), 201
 
 
 # 🔑 Seller Login
@@ -64,8 +79,11 @@ def login():
     seller = find_seller_by_email(email)
 
     if seller and bcrypt.check_password_hash(seller["password"], password):
+        token = generate_token(seller)
+
         return jsonify({
             "message": "Seller login successful",
+            "token": token,
             "seller": {
                 "id": str(seller["_id"]),
                 "businessName": seller["businessName"],

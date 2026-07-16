@@ -10,7 +10,7 @@ import SellerLogin from "./components/SellerLogin.jsx";
 import { TodayPage, ListingsPage, MessagesPage } from "./components/SellerPages.jsx";
 import { AuthProvider } from "./context/AuthContext";
 import AuthModal from "./components/AuthModal.jsx";
-
+import SellerAuth from "./components/SellerLogin.jsx";
 function App() {
   return (
     <AuthProvider>
@@ -37,6 +37,7 @@ function App() {
             <Route path="/hosting/today" element={<TodayPage />} />
             <Route path="/hosting/listings" element={<ListingsPage />} />
             <Route path="/hosting/messages" element={<MessagesPage />} />
+            <Route path="/SellerLogin" element={<SellerAuth />} />
           </Route>
 
         </Routes>

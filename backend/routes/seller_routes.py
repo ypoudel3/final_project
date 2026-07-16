@@ -1,10 +1,11 @@
 # routes/seller_route.py
-from flask import Blueprint, jsonify, request
-from database import listings_collection 
+from flask import Blueprint, jsonify, request, g
+from database import listings_collection
 from bson import json_util
 import json
-import os 
-from werkzeug.utils import secure_filename 
+import os
+from werkzeug.utils import secure_filename
+from utils.auth_utils import seller_required
 
 seller_bp = Blueprint('seller', __name__)
 
@@ -19,11 +20,13 @@ else:
     # If nothing is there, just create the folder
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+
 @seller_bp.route('/today', methods=['GET'])
+@seller_required
 def get_today():
-    test_email = "student@test.com" 
-    count = listings_collection.count_documents({"seller_email": test_email})
-    
+    seller_email = g.seller_email
+    count = listings_collection.count_documents({"seller_email": seller_email})
+
     if count == 0:
         action_msg = "Finish your first listing to start selling!"
     else:
@@ -35,21 +38,27 @@ def get_today():
         "listing_count": count
     })
 
+
 @seller_bp.route('/listings', methods=['GET', 'POST'])
+@seller_required
 def handle_listings():
-    test_email = "student@test.com"
+    # seller_email now comes from the verified token, never from the client
+    seller_email = g.seller_email
 
     if request.method == 'POST':
         # 1. Check if a file was sent in the request
         file = request.files.get('image')
-        
+
         # 2. Get text data (Since we send files, we use .form instead of .json)
         name = request.form.get("name")
         price = request.form.get("price")
         category = request.form.get("category", "General")
 
-        filename = "default.jpg" # Default if no image is uploaded
-        
+        if not name or not price:
+            return jsonify({"message": "Name and price are required"}), 400
+
+        filename = "default.jpg"  # Default if no image is uploaded
+
         if file and file.filename != '':
             # 3. Secure the filename and save it to our folder
             filename = secure_filename(file.filename)
@@ -62,18 +71,21 @@ def handle_listings():
         new_item = {
             "name": name,
             "price": price,
-            "seller_email": test_email,
-            "image_url": image_url, # 👈 This is the address React will use
+            "seller_email": seller_email,   # tied to the logged-in seller
+            "seller_id": g.seller_id,
+            "image_url": image_url,
             "category": category
         }
-        
+
         result = listings_collection.insert_one(new_item)
         return jsonify({"message": "Listing created!", "id": str(result.inserted_id)}), 201
 
-    # Fetch all listings
-    all_listings = list(listings_collection.find({"seller_email": test_email}))
+    # GET: only return this seller's own listings
+    all_listings = list(listings_collection.find({"seller_email": seller_email}))
     return json.loads(json_util.dumps(all_listings))
 
+
 @seller_bp.route('/messages', methods=['GET'])
+@seller_required
 def get_messages():
     return jsonify({"messages": "No new messages"})

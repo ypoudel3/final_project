@@ -1,4 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// Every request to a protected seller endpoint needs this token.
+// If it's missing or the server says it's expired/invalid, we send
+// the seller back to the login page.
+const getAuthHeaders = () => {
+  const token = localStorage.getItem('token');
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+const handleAuthFailure = (navigate) => {
+  localStorage.removeItem('token');
+  alert('Please log in to continue.');
+  navigate('/hosting/login');
+};
+
 //1.listingpage
 
 export const ListingsPage = () => {
@@ -7,10 +23,16 @@ export const ListingsPage = () => {
   const [price, setPrice] = useState("");      
   const [image, setImage] = useState(null); // 👈 NEW: State to hold the photo file
   const [items, setItems] = useState([]);   // 👈 NEW: State to show the list
+  const navigate = useNavigate();
 
-  // NEW: Fetch existing items when page loads
+  // Fetch existing items when page loads (only this seller's own items)
   const fetchInventory = async () => {
-    const response = await fetch("http://127.0.0.1:5000/seller/listings");
+    const response = await fetch("http://127.0.0.1:5000/seller/listings", {
+      headers: { ...getAuthHeaders() },
+    });
+
+    if (response.status === 401) return handleAuthFailure(navigate);
+
     const data = await response.json();
     setItems(data);
   };
@@ -32,10 +54,14 @@ export const ListingsPage = () => {
 
     const response = await fetch("http://127.0.0.1:5000/seller/listings", {
       method: "POST",
-      // IMPORTANT: Remove headers: { "Content-Type": "application/json" }
-      // Browser will set the correct boundary for FormData automatically
+      // IMPORTANT: no "Content-Type" header — the browser sets the
+      // multipart boundary for FormData automatically. We only add
+      // the auth token here.
+      headers: { ...getAuthHeaders() },
       body: formData 
     });
+
+    if (response.status === 401) return handleAuthFailure(navigate);
 
     if (response.ok) {
       alert("Saved to Database!");
@@ -116,13 +142,22 @@ export const ListingsPage = () => {
 export const TodayPage = () => {
   // 1. Create a state to hold the dashboard data
   const [stats, setStats] = useState({ action_required: "Loading...", listing_count: 0 });
+  const navigate = useNavigate();
 
   // 2. Fetch the data from Flask when the page opens
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/seller/today")
-      .then((res) => res.json())
+    fetch("http://127.0.0.1:5000/seller/today", {
+      headers: { ...getAuthHeaders() },
+    })
+      .then((res) => {
+        if (res.status === 401) {
+          handleAuthFailure(navigate);
+          return null;
+        }
+        return res.json();
+      })
       .then((data) => {
-        setStats(data); // Put the Flask response into our 'stats' variable
+        if (data) setStats(data); // Put the Flask response into our 'stats' variable
       })
       .catch((err) => console.error("Error fetching stats:", err));
   }, []);

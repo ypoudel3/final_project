@@ -1,7 +1,9 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
-
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import SellerAuth from "./SellerLogin";
 const SellerNavbar = () => {
+  const navigate = useNavigate();
+
   return (
     <nav className="flex justify-between items-center px-10 py-4 border-b border-gray-200 bg-white text-black z-50">
       {/* Logo */}
@@ -17,10 +19,11 @@ const SellerNavbar = () => {
       {/* Exit Link */}
       <div className="flex items-center gap-4">
   <Link to="/" className="...">Switch to buyer</Link>
+  <button className="text-sm text-gray-500 hover:text-black">
+  <Link to="/SellerLogin" className="...">Log out</Link>
+  </button>
   {/* The "Y" or user initial circle */}
-  <div className="w-8 h-8 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold">
-    Y
-  </div>
+
 </div>
     </nav>
   );

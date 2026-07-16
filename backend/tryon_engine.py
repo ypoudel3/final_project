@@ -1,45 +1,13 @@
 import cv2
-import numpy as np
-import mediapipe as mp
-from PIL import Image
 from rembg import remove
+from PIL import Image
+import numpy as np
+remove(Image.fromarray(np.zeros((10, 10, 3), dtype=np.uint8)))  
 
+import mediapipe as mp
+with mp.solutions.pose.Pose(static_image_mode=True, model_complexity=2, enable_segmentation=True) as p:
+    p.process(np.zeros((10, 10, 3), dtype=np.uint8))  # forces pose model download
 mp_pose = mp.solutions.pose
-
-# ─────────────────────────────────────────────────────────────────────────────
-# V13 — EDGE COHERENCE PATCH + ELBOW/RIB-PIN PATCH
-#
-# FIXES over V12 (hole-fix patch):
-# ✓ Removed hard erode() on garment alpha — it was creating a jagged
-#   "staircase" edge on diagonal sleeve boundaries. Replaced with a soft
-#   feather (GaussianBlur) so the edge stays smooth at any angle.
-# ✓ Removed the hard threshold (np.where(alpha>60,255,0)) on the warped
-#   garment alpha before compositing. Hard-thresholding + a separately
-#   blurred containment mask is what produced the scalloped/beaded
-#   gap pattern down both arms — the two edges never shared the same
-#   curve, so wherever they crossed you got a notch.
-# ✓ soft_alpha blur widened 3×3 → 9×9 to match the scale of contain_f's
-#   blur, so the two masks feather at comparable rates and their
-#   intersection doesn't alias.
-# ✓ contain mask now built with elliptical structuring elements
-#   instead of square ones (square kernels bias dilation into
-#   diagonal "steps" — exactly the beaded look on angled forearms).
-# ✓ Neckline: torso top boundary raised to match the TPS neck target
-#   point, closing the collar gap.
-#
-# NEW IN THIS PATCH (tps_torso only):
-# ✓ Added elbow anchor points (right/left) so the sleeve fabric itself
-#   bends at the elbow to match arm_corridor_mask's bend, instead of
-#   staying straight underneath a bent visibility mask (which was
-#   causing the visible elbow kink/notch).
-# ✓ Added rib/underarm "pin" anchor points (right/left) so the elbow
-#   correction above can't ripple sideways through the TPS's global
-#   deformation field and drag the torso side seam inward — that
-#   ripple was exposing the underlying garment layer at the ribs
-#   after the elbow-only fix was first tried.
-# ✓ All original 6 torso/waist/shoulder/hem control points are
-#   completely unchanged — new points are appended, not substituted.
-# ─────────────────────────────────────────────────────────────────────────────
 
 
 def remove_bg(cloth_rgb):
@@ -49,9 +17,6 @@ def remove_bg(cloth_rgb):
     bgr = cv2.cvtColor(arr[:, :, :3], cv2.COLOR_RGB2BGR)
     alpha = arr[:, :, 3]
 
-    # FIX: erosion was carving a jagged edge into diagonal garment
-    # boundaries (sleeves). A soft feather keeps edges smooth and
-    # matches the blur radius used downstream during compositing.
     alpha = cv2.GaussianBlur(alpha, (5, 5), 0)
 
     coords = cv2.findNonZero(alpha)

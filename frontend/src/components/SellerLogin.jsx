@@ -54,7 +54,7 @@ export default function SellerAuth() {
 };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4 mt-10">
       
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
 

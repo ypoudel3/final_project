@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { ImagePlus, ChevronDown, Loader2 } from "lucide-react";
 import { AuthContext } from "../context/AuthContext";
+import { useLocation } from "react-router-dom";
 
 // ==========================
 // ANIMATIONS
@@ -59,13 +60,6 @@ const faqs = [
     a: "Yes. Select any dress from the gallery before generating the result.",
   },
 ];
-
-// ==========================
-// CLOTHES
-// Put these images inside:
-// public/clothes/
-// ==========================
-
 
 // ==========================
 // FAQ COMPONENT
@@ -131,14 +125,9 @@ const FAQ = () => {
 // MAIN COMPONENT
 // ==========================
 
-// ==========================
-// MAIN COMPONENT
-// ==========================
-
-
-
 const TryOnUI = () => {
   const { user, setIsAuthModalOpen } = useContext(AuthContext);
+  const location = useLocation();
 
   const [personImage, setPersonImage] = useState(null);
   const [personPreview, setPersonPreview] = useState(null);
@@ -148,6 +137,17 @@ const TryOnUI = () => {
 
   const fileInputRef = useRef(null);
 
+  // If the user arrived here from a gallery page with a pre-selected
+  // image passed via navigate(..., { state: { galleryImage } }),
+  // pre-fill the model image/preview with it.
+  useEffect(() => {
+    const incoming = location.state?.galleryImage;
+    if (incoming) {
+      setPersonImage(incoming);
+      setPersonPreview(incoming);
+    }
+  }, [location.state]);
+
   // Example models data based on your target layout row structure
   const modelExamples = [
     { id: 1, image: "/models/model1.jpg" },
@@ -156,7 +156,7 @@ const TryOnUI = () => {
     { id: 4, image: "/models/model4.jpg" },
   ];
 
-  // Outfits are now pulled live from every seller's listings and grouped
+  // Outfits are pulled live from every seller's listings and grouped
   // by shop name, e.g. { "Zara": [...], "H&M": [...] }
   const [shopListings, setShopListings] = useState({});
   const [listingsLoading, setListingsLoading] = useState(true);
@@ -221,6 +221,12 @@ const TryOnUI = () => {
       const clothBlob = await fetch(selectedCloth.image_url).then((r) => r.blob());
       formData.append("cloth", clothBlob, (selectedCloth.name || "cloth") + ".jpg");
 
+      // Attach ownership/context info when the user is logged in
+      if (user?.id) {
+        formData.append("user_id", user.id);
+        formData.append("cloth_name", selectedCloth.name || "cloth");
+      }
+
       const response = await axios.post("http://127.0.0.1:5000/tryon", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -255,7 +261,7 @@ const TryOnUI = () => {
 
           {/* MAIN GRID */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-            
+
             {/* STEP 1: UPLOAD MODEL */}
             <motion.div
               variants={itemVariants}
@@ -447,7 +453,7 @@ const TryOnUI = () => {
               <img
                 src={result}
                 alt="Result"
-                className="rounded-3xl mx-auto max-h-175 object-contain"
+                className="rounded-3xl mx-auto max-h-[800px] object-contain"
               />
             </motion.div>
           )}

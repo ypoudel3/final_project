@@ -1,9 +1,12 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { ImagePlus, ChevronDown, Loader2 } from "lucide-react";
 import { AuthContext } from "../context/AuthContext";
-import { useLocation } from "react-router-dom";
+
+// ==========================
+// ANIMATIONS
+// ==========================
 
 const containerVariants = {
   hidden: {},
@@ -15,32 +18,58 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
   },
 };
+
+// ==========================
+// FAQ DATA
+// ==========================
 
 const faqs = [
   {
     q: "How accurate is the virtual try-on?",
     a: "Our AI-powered system generates realistic clothing fitting results using advanced body landmark detection and garment warping.",
   },
+
   {
     q: "Can I upload my own photo?",
     a: "Yes. You can upload your own image after logging into your account.",
   },
+
   {
     q: "How long does generation take?",
     a: "Usually between 3 to 10 seconds depending on image size.",
   },
+
   {
     q: "Can I try different dresses?",
     a: "Yes. Select any dress from the gallery before generating the result.",
   },
 ];
+
+// ==========================
+// CLOTHES
+// Put these images inside:
+// public/clothes/
+// ==========================
+
+
+// ==========================
+// FAQ COMPONENT
+// ==========================
 
 const FAQ = () => {
   const [open, setOpen] = useState(null);
@@ -71,7 +100,10 @@ const FAQ = () => {
               onClick={() => setOpen(open === i ? null : i)}
               className="w-full flex items-center justify-between px-6 py-5 text-left"
             >
-              <span className="font-medium text-[#3B5249]">{faq.q}</span>
+              <span className="font-medium text-[#3B5249]">
+                {faq.q}
+              </span>
+
               <ChevronDown
                 className={`transition duration-300 ${
                   open === i ? "rotate-180" : ""
@@ -95,9 +127,18 @@ const FAQ = () => {
   );
 };
 
+// ==========================
+// MAIN COMPONENT
+// ==========================
+
+// ==========================
+// MAIN COMPONENT
+// ==========================
+
+
+
 const TryOnUI = () => {
   const { user, setIsAuthModalOpen } = useContext(AuthContext);
-  const location = useLocation();
 
   const [personImage, setPersonImage] = useState(null);
   const [personPreview, setPersonPreview] = useState(null);
@@ -107,14 +148,7 @@ const TryOnUI = () => {
 
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    const incoming = location.state?.galleryImage;
-    if (incoming) {
-      setPersonImage(incoming);
-      setPersonPreview(incoming);
-    }
-  }, [location.state]);
-
+  // Example models data based on your target layout row structure
   const modelExamples = [
     { id: 1, image: "/models/model1.jpg" },
     { id: 2, image: "/models/model2.jpg" },
@@ -122,11 +156,27 @@ const TryOnUI = () => {
     { id: 4, image: "/models/model4.jpg" },
   ];
 
-  const clothesExamples = [
-    { id: 1, image: "/clothes/dress1.jpg", name: "dress1" },
-    { id: 2, image: "/clothes/dress2.jpg", name: "dress2" },
-    { id: 3, image: "/clothes/dress3.jpg", name: "dress3" },
-  ];
+  // Outfits are now pulled live from every seller's listings and grouped
+  // by shop name, e.g. { "Zara": [...], "H&M": [...] }
+  const [shopListings, setShopListings] = useState({});
+  const [listingsLoading, setListingsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        // NOTE: adjust this path to match wherever seller_bp is registered
+        // in your Flask app (e.g. app.register_blueprint(seller_bp, url_prefix="/seller"))
+        const res = await axios.get("http://127.0.0.1:5000/seller/public/listings");
+        setShopListings(res.data.shops || {});
+      } catch (error) {
+        console.error("Failed to load outfits:", error);
+      } finally {
+        setListingsLoading(false);
+      }
+    };
+
+    fetchListings();
+  }, []);
 
   const handleUploadClick = () => {
     if (!user) {
@@ -159,6 +209,7 @@ const TryOnUI = () => {
     try {
       const formData = new FormData();
 
+      // --- FIX FOR PERSON IMAGE ---
       if (typeof personImage === "string") {
         const personBlob = await fetch(personImage).then((r) => r.blob());
         formData.append("person", personBlob, "model_example.jpg");
@@ -166,13 +217,9 @@ const TryOnUI = () => {
         formData.append("person", personImage);
       }
 
-      const clothBlob = await fetch(selectedCloth.image).then((r) => r.blob());
-      formData.append("cloth", clothBlob, selectedCloth.name + ".jpg");
-
-      if (user?.id) {
-        formData.append("user_id", user.id);
-        formData.append("cloth_name", selectedCloth.name);
-      }
+      // --- CLOTH IMAGE ---
+      const clothBlob = await fetch(selectedCloth.image_url).then((r) => r.blob());
+      formData.append("cloth", clothBlob, (selectedCloth.name || "cloth") + ".jpg");
 
       const response = await axios.post("http://127.0.0.1:5000/tryon", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -196,15 +243,23 @@ const TryOnUI = () => {
           animate="show"
           className="max-w-7xl mx-auto"
         >
+          {/* TITLE */}
           <motion.div variants={itemVariants} className="text-center mb-14">
-            <h1 className="text-4xl font-bold text-[#3B5249]">Virtual Try-On Studio</h1>
-            <p className="text-gray-600 mt-4">Upload your image and try clothes instantly.</p>
+            <h1 className="text-4xl font-bold text-[#3B5249]">
+              Virtual Try-On Studio
+            </h1>
+            <p className="text-gray-600 mt-4">
+              Upload your image and try clothes instantly.
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          {/* MAIN GRID */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            
+            {/* STEP 1: UPLOAD MODEL */}
             <motion.div
               variants={itemVariants}
-              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col justify-between"
+              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col gap-6 max-h-150 overflow-y-auto"
             >
               <div>
                 <h2 className="text-xl font-semibold text-[#3B5249] mb-4 text-center">
@@ -219,10 +274,11 @@ const TryOnUI = () => {
                   onChange={handleFileChange}
                 />
 
+                {/* DISPLAY WINDOW */}
                 <motion.div
                   whileHover={user ? { scale: 1.01 } : {}}
                   onClick={handleUploadClick}
-                  className={`border-2 border-dashed rounded-3xl h-96 flex flex-col items-center justify-center overflow-hidden relative transition bg-gray-50 ${
+                  className={`border-2 border-dashed rounded-3xl h-86 flex flex-col items-center justify-center overflow-hidden relative transition bg-gray-50 ${
                     user ? "cursor-pointer border-[#3B5249]" : "cursor-not-allowed opacity-80 border-gray-400"
                   }`}
                 >
@@ -243,7 +299,8 @@ const TryOnUI = () => {
                 </motion.div>
               </div>
 
-              <div className="mt-6">
+              {/* TWO-ROW MODEL THUMBNAIL BOX */}
+              <div>
                 <p className="text-sm font-medium text-gray-500 mb-2">Examples</p>
                 <div className="grid grid-cols-4 gap-3">
                   {modelExamples.map((ex) => (
@@ -253,7 +310,9 @@ const TryOnUI = () => {
                         setPersonPreview(ex.image);
                         setPersonImage(ex.image);
                       }}
-                      className="h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-[#3B5249] active:scale-95 cursor-pointer transition shadow-sm"
+                      className={`h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition active:scale-95 shadow-sm ${
+                        personImage === ex.image ? "border-[#3B5249]" : "border-transparent hover:border-gray-300"
+                      }`}
                     >
                       <img src={ex.image} alt="Example Model" className="w-full h-full object-cover" />
                     </div>
@@ -266,7 +325,8 @@ const TryOnUI = () => {
                       setPersonPreview(null);
                       setResult(null);
                     }}
-                    className="mt-3 text-xs font-semibold text-red-600 hover:underline"
+
+                    className="mt-3 text-sm font-semibold text-red-600 hover:underline block"
                   >
                     Remove Image
                   </button>
@@ -274,21 +334,23 @@ const TryOnUI = () => {
               </div>
             </motion.div>
 
+            {/* STEP 2: SELECT OUTFIT */}
             <motion.div
               variants={itemVariants}
-              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col justify-between"
+              className="bg-white rounded-3xl p-8 shadow-lg flex flex-col gap-6 max-h-150 overflow-y-auto"
             >
               <div>
                 <h2 className="text-xl font-semibold text-[#3B5249] mb-4 text-center">
                   Step 2: Select Your Outfit
                 </h2>
 
-                <div className="border-2 border-dashed border-gray-200 rounded-3xl h-96 flex flex-col items-center justify-center overflow-hidden relative bg-gray-50">
+                {/* DISPLAY WINDOW */}
+                <div className="border-2 border-dashed border-gray-200 rounded-3xl h-86 flex flex-col items-center justify-center overflow-hidden relative bg-gray-50">
                   {selectedCloth ? (
                     <img
-                      src={selectedCloth.image}
+                      src={selectedCloth.image_url}
                       alt="Selected outfit"
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain p-4 absolute inset-0"
                     />
                   ) : (
                     <div className="flex flex-col items-center p-4 text-center">
@@ -301,29 +363,57 @@ const TryOnUI = () => {
                 </div>
               </div>
 
-              <div className="mt-6">
-                <p className="text-sm font-medium text-gray-500 mb-2">Examples</p>
-                <div className="grid grid-cols-4 gap-3">
-                  {clothesExamples.map((cloth) => (
-                    <div
-                      key={cloth.id}
-                      onClick={() => setSelectedCloth(cloth)}
-                      className={`h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition active:scale-95 shadow-sm ${
-                        selectedCloth?.id === cloth.id ? "border-[#3B5249]" : "border-transparent hover:border-gray-300"
-                      }`}
-                    >
-                      <img
-                        src={cloth.image}
-                        alt="Clothing snippet"
-                        className="w-full h-full object-contain"
-                      />
+              {/* OUTFITS GROUPED BY SHOP */}
+              <div className="max-h-96 overflow-y-auto pr-1">
+                {listingsLoading ? (
+                  <p className="text-sm text-gray-400 text-center py-6">
+                    Loading outfits...
+                  </p>
+                ) : Object.keys(shopListings).length === 0 ? (
+                  <p className="text-sm text-gray-400 text-center py-6">
+                    No outfits available yet.
+                  </p>
+                ) : (
+                  Object.entries(shopListings).map(([shopName, items]) => (
+                    <div key={shopName} className="mb-6 last:mb-0">
+                      <p className="text-sm font-semibold text-[#3B5249] mb-2">
+                        {shopName}
+                      </p>
+                      <div className="grid grid-cols-4 gap-3">
+                        {items.map((cloth) => {
+                          const clothId = cloth._id?.$oid || cloth._id;
+                          const isSelected =
+                            (selectedCloth?._id?.$oid || selectedCloth?._id) === clothId;
+
+                          return (
+                            <div
+                              key={clothId}
+                              onClick={() => setSelectedCloth(cloth)}
+                              title={cloth.name}
+                              className={`h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition active:scale-95 shadow-sm ${
+                                isSelected
+                                  ? "border-[#3B5249]"
+                                  : "border-transparent hover:border-gray-300"
+                              }`}
+                            >
+                              <img
+                                src={cloth.image_url}
+                                alt={cloth.name}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  ))}
-                </div>
+                  ))
+                )}
               </div>
             </motion.div>
+
           </div>
 
+          {/* GENERATE BUTTON */}
           <motion.div variants={itemVariants} className="flex justify-center mt-12">
             <motion.button
               whileHover={{ scale: 1.04 }}
@@ -343,6 +433,7 @@ const TryOnUI = () => {
             </motion.button>
           </motion.div>
 
+          {/* RESULT */}
           {result && (
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -356,7 +447,7 @@ const TryOnUI = () => {
               <img
                 src={result}
                 alt="Result"
-                className="rounded-3xl mx-auto max-h-[800px] object-contain"
+                className="rounded-3xl mx-auto max-h-175 object-contain"
               />
             </motion.div>
           )}

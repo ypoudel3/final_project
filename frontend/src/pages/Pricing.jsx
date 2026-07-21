@@ -23,8 +23,8 @@ const PLANS = [
   },
   {
     name: "Basic",
-    monthlyPrice: 9.99,
-    yearlyPrice: 7.99,
+    monthlyPrice: 99,
+    yearlyPrice: 799,
     credits: "6000",
     images: "1200",
     features: [
@@ -39,8 +39,8 @@ const PLANS = [
   },
   {
     name: "Standard",
-    monthlyPrice: 19.99,
-    yearlyPrice: 15.99,
+    monthlyPrice: 199,
+    yearlyPrice: 1499,
     isPopular: true,
     credits: "18000",
     images: "3600",
@@ -56,8 +56,8 @@ const PLANS = [
   },
   {
     name: "Pro",
-    monthlyPrice: 59.99,
-    yearlyPrice: 47.99,
+    monthlyPrice: 399,
+    yearlyPrice: 2499,
     credits: "60000",
     images: "12000",
     features: [
@@ -94,7 +94,7 @@ const PriceCard = ({ plan, isYearly }) => {
           {plan.name}
         </h3>
         <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-bold text-[#3B5249]">${price}</span>
+          <span className="text-4xl font-bold text-[#3B5249]">Rs.{price}</span>
           <span className="text-gray-500 text-sm">/month</span>
         </div>
       </header>

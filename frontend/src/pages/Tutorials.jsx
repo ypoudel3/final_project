@@ -28,7 +28,7 @@ export default function Tutorials() {
                 Step 1: Upload Your Model
               </h2>
               <p className="text-sm font-medium text-slate-700/90 leading-relaxed">
-                Begin by uploading a clear photo of your model or yourself . This image will serve as the base for your virtual Try On experience, ensuring a personalized and accurate fitting. Whether it's a full-body shot or a close-up, make sure the photo is clear to get the best results with our AI-powered system.
+                Begin by uploading a clear photo of your model or yourself . This image will serve as the base for your virtual Try On experience, ensuring a personalized and accurate fitting. Whether it's a full-body shot or a close-up, make sure the photo is clear to get the best results with our system.
               </p>
             </div>
           </div>

@@ -286,9 +286,7 @@ def tps_torso(full_bgr, full_alpha, kp, canvas_shape):
             bx + bw * fx,
             by + bh * fy
         ]
-
-    # ── ORIGINAL 6 anchors — waist/shoulder/hip/hem behavior is
-    # preserved exactly, untouched by this patch.
+    
     src_pts = np.array([
         sp(0.50, 0.04),
         sp(0.18, 0.10),
@@ -300,11 +298,11 @@ def tps_torso(full_bgr, full_alpha, kp, canvas_shape):
 
     dst_pts = np.array([
 
-        neck - [0, sw * 0.18],
+        neck - [0, sw * 0.14],
 
-        kp["rs"] - [sw * 0.06, -sw * 0.005],
+        kp["rs"] - [sw * 0.09, -sw * 0.005],
 
-        kp["ls"] + [sw * 0.06, sw * 0.005],
+        kp["ls"] + [sw * 0.07, sw * 0.005],
 
         kp["rh"] - [sw * 0.10, -sw * 0.03],
 
@@ -314,13 +312,10 @@ def tps_torso(full_bgr, full_alpha, kp, canvas_shape):
 
     ], dtype=np.float32)
 
-    # ── NEW: elbow anchors, based on the actual garment image —
-    # sleeve bend sits ~45% down, near the outer edge of the garment
-    # crop. This makes the sleeve fabric itself bend at the elbow to
-    # match arm_corridor_mask's bend, fixing the elbow kink/notch.
+    
     src_pts = np.concatenate([src_pts, np.array([
-        sp(0.096, 0.56),   # right elbow (garment space)
-        sp(0.96, 0.56),   # left elbow (garment space)
+        sp(0.096, 0.56),   
+        sp(0.96, 0.56),   
     ], dtype=np.float32)])
 
     dst_pts = np.concatenate([dst_pts, np.array([
@@ -328,14 +323,10 @@ def tps_torso(full_bgr, full_alpha, kp, canvas_shape):
         kp["le"] + [sw * 0.20, sw * 0.006],
     ], dtype=np.float32)])
 
-    # ── NEW: rib / underarm "pin" anchors — locks the torso side
-    # seam in place so the elbow correction above can't ripple
-    # sideways through the TPS's global deformation field and drag
-    # the torso side edge inward (which was exposing the underlying
-    # garment layer at the ribs).
+
     src_pts = np.concatenate([src_pts, np.array([
-        sp(0.20, 0.30),   # right rib / underarm (garment space)
-        sp(0.80, 0.30),   # left rib / underarm (garment space)
+        sp(0.20, 0.30),   
+        sp(0.80, 0.30),   
     ], dtype=np.float32)])
 
     dst_pts = np.concatenate([dst_pts, np.array([
@@ -421,20 +412,12 @@ def process_tryon(user_rgb, cloth_rgb):
 
     contain = cv2.bitwise_or(body, torso)
     contain = cv2.bitwise_or(contain, arms)
-
-    # FIX: wider blur (11→21) so contain_f's falloff rate matches
-    # soft_alpha's falloff rate — mismatched falloff rates were the
-    # other half of the beading artifact (see soft_alpha below).
     contain_f = cv2.GaussianBlur(
         contain.astype(float),
         (21, 21),
         0
     ) / 255.0
 
-    # FIX: no more hard threshold. warped_alpha already has a clean,
-    # anti-aliased edge (rembg + our soft feather in remove_bg), so
-    # thresholding it back to 0/255 was throwing that away and
-    # reintroducing a jagged edge right before compositing.
     soft_alpha = cv2.GaussianBlur(
         warped_alpha.astype(float),
         (9, 9),

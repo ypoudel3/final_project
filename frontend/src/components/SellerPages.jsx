@@ -185,11 +185,83 @@ export const TodayPage = () => {
 };
 
 // --- 3. MESSAGES PAGE (Required by App.jsx) ---
+// --- 3. MESSAGES PAGE (Required by App.jsx) ---
 export const MessagesPage = () => {
+  const messages = [
+    {
+      id: 1,
+      name: "Ayusha",
+      time: "10 mins ago",
+      unread: true,
+      message:
+        "Hi! Is the Beige Knit Crop Top still available in size M? Also, what's the price after the current discount?",
+    },
+    {
+      id: 2,
+      name: "Yunisha",
+      time: "35 mins ago",
+      unread: true,
+      message:
+        "Hello! How many days does standard delivery usually take inside Kathmandu?",
+    },
+    {
+      id: 3,
+      name: "Ayusha",
+      time: "Yesterday",
+      unread: false,
+      message:
+        "If I order two tops together, will the shipping cost be the same or is there free delivery?",
+    },
+  ];
+
   return (
     <div className="p-10 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-serif font-bold text-[#3B5249]">Messages</h1>
-      <p className="text-gray-400 mt-4">No new messages yet.</p>
+    
+
+      <div className="max-w-3xl space-y-4 align-center justify-center flex flex-col mx-auto">
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className="bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-all p-5 flex gap-4"
+          >
+            {/* Avatar */}
+            <div className="w-12 h-12 rounded-full bg-[#3B5249] text-white flex items-center justify-center text-lg font-semibold flex-shrink-0">
+              {msg.name.charAt(0)}
+            </div>
+
+            {/* Message Content */}
+            <div className="flex-1">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <h2 className="font-semibold text-gray-800 text-lg">
+                    {msg.name}
+                  </h2>
+
+                  {msg.unread && (
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                  )}
+                </div>
+
+                <span className="text-sm text-gray-400">{msg.time}</span>
+              </div>
+
+              <p className="mt-2 text-gray-600 leading-relaxed">
+                {msg.message}
+              </p>
+
+              <div className="mt-4 flex gap-3">
+                <button className="px-4 py-2 rounded-xl bg-[#3B5249] text-white hover:opacity-90 transition">
+                  Reply
+                </button>
+
+                <button className="px-4 py-2 rounded-xl border border-gray-300 text-gray-600 hover:bg-gray-100 transition">
+                  Mark as Read
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

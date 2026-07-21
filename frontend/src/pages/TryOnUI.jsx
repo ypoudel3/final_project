@@ -150,7 +150,6 @@ const TryOnUI = () => {
 
   // Example models data based on your target layout row structure
   const modelExamples = [
-    { id: 1, image: "/models/model1.jpg" },
     { id: 2, image: "/models/model2.jpg" },
     { id: 3, image: "/models/model3.jpg" },
     { id: 4, image: "/models/model4.jpg" },
@@ -394,7 +393,9 @@ const TryOnUI = () => {
                           return (
                             <div
                               key={clothId}
-                              onClick={() => setSelectedCloth(cloth)}
+                              onClick={() =>
+                                setSelectedCloth({ ...cloth, shop_name: shopName })
+                              }
                               title={cloth.name}
                               className={`h-24 rounded-xl overflow-hidden border-2 cursor-pointer transition active:scale-95 shadow-sm ${
                                 isSelected
@@ -455,6 +456,38 @@ const TryOnUI = () => {
                 alt="Result"
                 className="rounded-3xl mx-auto max-h-[800px] object-contain"
               />
+
+              {/* BUY NOW — links out to the seller for the item just tried on */}
+              {selectedCloth && (
+                <div className="flex flex-col items-center mt-8 gap-2">
+                  <p className="text-gray-600 text-lg font-semibold">
+                    Liking the fit?{" "}
+                    {selectedCloth.shop_name
+                      ? `Get this "${selectedCloth.name}" from ${selectedCloth.shop_name}.`
+                      : `Get this "${selectedCloth.name}" now.`}
+                  </p>
+
+                  {selectedCloth.product_url ? (
+                    <a
+                      href={selectedCloth.product_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#3B5249] text-white px-10 py-3 rounded-2xl font-medium shadow-md hover:bg-[#2f433b] transition"
+                    >
+                      Buy This Top
+                    </a>
+                  ) : (
+                    // Fallback while sellers/backend don't yet supply product_url per listing
+                    <button
+                      disabled
+                      title="This item does not have a purchase link yet"
+                      className="bg-[#3B5249] text-white px-10 py-3 rounded-2xl font-medium cursor-not-allowed"
+                    >
+                      Buy This Top
+                    </button>
+                  )}
+                </div>
+              )}
             </motion.div>
           )}
         </motion.div>
